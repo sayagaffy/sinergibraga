@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  description String
+  features    String[] // List of specific sub-services (e.g., UKL-UPL, SPPL)
+  geoFacts    String   @db.Text // High fact-density text for GEO
+  icon        String   // Lucide icon name
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model PortfolioItem {
+  id          String   @id @default(cuid())
+  title       String
+  client      String?
+  year        Int
+  category    String
+  description String
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+}
+
+model Testimonial {
+  id        String   @id @default(cuid())
+  name      String
+  role      String?
+  company   String?
+  content   String
+  rating    Int      @default(5)
+  createdAt DateTime @default(now())
+}
+
+model ContactSubmission {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  message   String
+  createdAt DateTime @default(now())
+}
