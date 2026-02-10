@@ -4,15 +4,15 @@ import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X } from "lucide-react"
+import { Menu, X, ArrowRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/Button"
 
 const navItems = [
   { name: "Beranda", href: "/" },
-  { name: "Tentang Kami", href: "/about" },
   { name: "Layanan", href: "/services" },
   { name: "Portofolio", href: "/portfolio" },
+  { name: "Tentang Kami", href: "/about" },
   { name: "Kontak", href: "/contact" },
 ]
 
@@ -39,20 +39,22 @@ export function Navbar() {
       className={cn(
         "fixed top-0 w-full z-50 transition-all duration-300 border-b",
         scrolled
-          ? "bg-white/90 backdrop-blur-md border-slate-200 py-3 shadow-sm"
+          ? "bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border-slate-200 dark:border-slate-800 py-3 shadow-sm"
           : "bg-transparent border-transparent py-5"
       )}
     >
       <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 group">
-          <div className="w-10 h-10 bg-sbm-blue rounded-lg flex items-center justify-center text-white font-bold text-xl group-hover:scale-105 transition-transform">
+          <div className="w-10 h-10 bg-gradient-to-br from-sbm-blue to-sbm-teal rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-sbm-blue/20 group-hover:scale-105 transition-transform">
             S
           </div>
           <div className="flex flex-col">
-            <span className={cn("font-bold text-lg leading-tight", scrolled ? "text-slate-900" : "text-slate-900")}>
+            <span className={cn("font-bold text-lg leading-tight transition-colors", scrolled ? "text-slate-900 dark:text-white" : "text-white")}>
               Sinergi Braga Mandiri
             </span>
-            <span className="text-[10px] text-slate-500 tracking-wider">ENVIRONMENTAL CONSULTANT</span>
+            <span className={cn("text-[10px] tracking-wider transition-colors", scrolled ? "text-slate-500 dark:text-slate-400" : "text-slate-300")}>
+              ENVIRONMENTAL CONSULTANT
+            </span>
           </div>
         </Link>
 
@@ -63,8 +65,10 @@ export function Navbar() {
               key={item.href}
               href={item.href}
               className={cn(
-                "text-sm font-medium transition-colors hover:text-sbm-blue relative",
-                pathname === item.href ? "text-sbm-blue" : "text-slate-600"
+                "text-sm font-medium transition-colors hover:text-sbm-blue relative py-1",
+                pathname === item.href
+                  ? "text-sbm-blue font-semibold"
+                  : scrolled ? "text-slate-600 dark:text-slate-300" : "text-slate-200 hover:text-white"
               )}
             >
               {item.name}
@@ -76,14 +80,21 @@ export function Navbar() {
               )}
             </Link>
           ))}
-          <Button size="sm" variant="primary">
-            Get Quote
-          </Button>
+          <Link href="/contact">
+            <Button size="sm" className={cn(
+              "gap-2 transition-all",
+              scrolled
+                ? "bg-sbm-blue text-white shadow-lg shadow-sbm-blue/20"
+                : "bg-white text-sbm-blue hover:bg-white/90"
+            )}>
+              Hubungi Kami <ArrowRight className="w-4 h-4" />
+            </Button>
+          </Link>
         </nav>
 
         {/* Mobile Toggle */}
         <button
-          className="md:hidden p-2 text-slate-600"
+          className={cn("md:hidden p-2 transition-colors", scrolled ? "text-slate-900 dark:text-white" : "text-white")}
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <X /> : <Menu />}
@@ -97,24 +108,32 @@ export function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white border-b border-slate-200 overflow-hidden"
+            className="md:hidden bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 overflow-hidden absolute top-full left-0 right-0 shadow-xl"
           >
-            <nav className="flex flex-col p-4 gap-4">
+            <nav className="flex flex-col p-4 gap-2">
               {navItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "text-base font-medium p-2 rounded-md transition-colors",
+                    "text-base font-medium p-3 rounded-xl transition-colors flex justify-between items-center",
                     pathname === item.href
                       ? "bg-sbm-blue/10 text-sbm-blue"
-                      : "text-slate-600 hover:bg-slate-50"
+                      : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900"
                   )}
                 >
                   {item.name}
+                  {pathname === item.href && <div className="w-1.5 h-1.5 rounded-full bg-sbm-blue" />}
                 </Link>
               ))}
-              <Button className="w-full">Get Quote</Button>
+              <div className="pt-4 mt-2 border-t border-slate-100 dark:border-slate-900">
+                <Link href="/contact">
+                   <Button className="w-full justify-between group">
+                     Hubungi Kami
+                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                   </Button>
+                </Link>
+              </div>
             </nav>
           </motion.div>
         )}
