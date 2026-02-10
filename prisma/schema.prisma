@@ -12,9 +12,12 @@ model Service {
   title       String
   slug        String   @unique
   description String
-  features    String[] // List of specific sub-services (e.g., UKL-UPL, SPPL)
-  geoFacts    String   @db.Text // High fact-density text for GEO
+  features    String[] // List of specific sub-services
+  geoFacts    String   @db.Text // High fact-density text
   icon        String   // Lucide icon name
+  statistics  Json?    // e.g., { "projectsCompleted": 50, "successRate": "100%" }
+  regulations String[] // e.g., ["PP No. 22 Tahun 2021", "Permen LHK No. 68"]
+  expertQuote String?  // "AMDAL adalah syarat mutlak..." - Ir. Budi (Ahli Lingkungan)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -22,11 +25,16 @@ model Service {
 model PortfolioItem {
   id          String   @id @default(cuid())
   title       String
+  slug        String   @unique
   client      String?
   year        Int
   category    String
+  location    String?  // e.g., "Bandung, Jawa Barat"
   description String
   imageUrl    String?
+  challenge   String?  // "Lahan terbatas..."
+  solution    String?  // "Desain bio-aerob vertikal..."
+  result      String?  // "Baku mutu terpenuhi 100%..."
   createdAt   DateTime @default(now())
 }
 
