@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -7,17 +7,50 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Expert {
+  id          String   @id @default(cuid())
+  name        String
+  role        String
+  expertQuote String   @db.Text
+  photoUrl    String?
+  linkedinUrl String?
+  credentials String   @db.Text
+
+  services    Service[]
+  portfolioItems PortfolioItem[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Citation {
+  id            String   @id @default(cuid())
+  sourceTitle   String
+  sourceUrl     String?
+  contextClause String?  @db.Text
+
+  services      Service[]
+  portfolioItems PortfolioItem[]
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
 model Service {
   id          String   @id @default(cuid())
   title       String
   slug        String   @unique
   description String
-  features    String[] // List of specific sub-services
-  geoFacts    String   @db.Text // High fact-density text
-  icon        String   // Lucide icon name
-  statistics  Json?    // e.g., { "projectsCompleted": 50, "successRate": "100%" }
-  regulations String[] // e.g., ["PP No. 22 Tahun 2021", "Permen LHK No. 68"]
-  expertQuote String?  // "AMDAL adalah syarat mutlak..." - Ir. Budi (Ahli Lingkungan)
+  features    String[]
+  geoFacts    String   @db.Text
+  icon        String
+  statistics  Json?
+
+  citations   Citation[]
+
+  expert      Expert? @relation(fields: [expertId], references: [id])
+  expertId    String?
+
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -29,13 +62,20 @@ model PortfolioItem {
   client      String?
   year        Int
   category    String
-  location    String?  // e.g., "Bandung, Jawa Barat"
+  location    String?
   description String
   imageUrl    String?
-  challenge   String?  // "Lahan terbatas..."
-  solution    String?  // "Desain bio-aerob vertikal..."
-  result      String?  // "Baku mutu terpenuhi 100%..."
+  challenge   String?
+  solution    String?
+  result      String?
+
+  citations   Citation[]
+
+  expert      Expert? @relation(fields: [expertId], references: [id])
+  expertId    String?
+
   createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Testimonial {
