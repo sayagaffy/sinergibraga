@@ -3,12 +3,12 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model Expert {
-  id          String   @id @default(cuid())
+  id          String  @id @default(cuid())
   name        String
   role        String
   expertQuote String
@@ -16,51 +16,51 @@ model Expert {
   linkedinUrl String?
   credentials String
 
-  services    Service[]
+  services       Service[]
   portfolioItems PortfolioItem[]
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Citation {
-  id            String   @id @default(cuid())
+  id            String  @id @default(cuid())
   sourceTitle   String
   sourceUrl     String?
   contextClause String?
 
-  services      Service[]
+  services       Service[]
   portfolioItems PortfolioItem[]
 
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Service {
-  id          String   @id @default(cuid())
+  id          String  @id @default(cuid())
   title       String
-  slug        String   @unique
+  slug        String  @unique
   description String
-  features    String   // Stored as String (JSONified) for SQLite
+  features    String // Stored as String (JSONified) for SQLite
   geoFacts    String
   icon        String
-  statistics  String?  // Stored as String (JSONified) for SQLite
+  statistics  String? // Stored as String (JSONified) for SQLite
 
-  citations   Citation[]
-  faqs        FAQ[]
+  citations     Citation[]
+  faqs          FAQ[]
   glossaryTerms GlossaryTerm[]
 
-  expert      Expert? @relation(fields: [expertId], references: [id])
-  expertId    String?
+  expert   Expert? @relation(fields: [expertId], references: [id])
+  expertId String?
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model PortfolioItem {
-  id          String   @id @default(cuid())
+  id          String  @id @default(cuid())
   title       String
-  slug        String   @unique
+  slug        String  @unique
   client      String?
   year        Int
   category    String
@@ -71,21 +71,21 @@ model PortfolioItem {
   solution    String?
   result      String?
 
-  citations   Citation[]
+  citations Citation[]
 
-  expert      Expert? @relation(fields: [expertId], references: [id])
-  expertId    String?
+  expert   Expert? @relation(fields: [expertId], references: [id])
+  expertId String?
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model FAQ {
-  id        String   @id @default(cuid())
-  question  String
-  answer    String
+  id       String @id @default(cuid())
+  question String
+  answer   String
 
-  service   Service  @relation(fields: [serviceId], references: [id])
+  service   Service @relation(fields: [serviceId], references: [id])
   serviceId String
 
   createdAt DateTime @default(now())
@@ -93,14 +93,14 @@ model FAQ {
 }
 
 model GlossaryTerm {
-  id         String   @id @default(cuid())
-  term       String   @unique
+  id         String @id @default(cuid())
+  term       String @unique
   definition String
 
-  services   Service[]
+  services Service[]
 
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Testimonial {
