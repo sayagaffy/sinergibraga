@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = "postgresql://jules_admin:password123@localhost:5432/sbm_db"
 }
 
 model Expert {
@@ -41,10 +41,10 @@ model Service {
   title       String
   slug        String   @unique
   description String
-  features    String   // Stored as JSON string
+  features    Json     // Stored as JSON
   geoFacts    String
   icon        String
-  statistics  String?  // Stored as JSON string
+  statistics  Json?    // Stored as JSON
 
   citations   Citation[]
   faqs        FAQ[]

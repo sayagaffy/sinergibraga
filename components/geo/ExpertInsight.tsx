@@ -44,7 +44,7 @@ export function ExpertInsight({ expert }: ExpertInsightProps) {
               <Image
                 src={expert.photoUrl}
                 alt={expert.name}
-                fill
+                fill sizes="(max-width: 768px) 128px, 160px"
                 className="object-cover transition-transform duration-700 group-hover:scale-110"
               />
             ) : (

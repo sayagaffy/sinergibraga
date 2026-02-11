@@ -1,11 +1,17 @@
 import { Metadata } from "next"
+import dynamic from "next/dynamic"
 import { HeroSection } from "@/components/home/HeroSection"
 import { TrustBar } from "@/components/home/TrustBar"
 import { ServiceCard } from "@/components/home/ServiceCard"
-import { GeoFactSheet } from "@/components/geo/GeoFactSheet"
 import { Button } from "@/components/ui/Button"
 import Link from "next/link"
 import { ArrowRight, Car, Droplets, FileText, Waves } from "lucide-react"
+
+// Dynamically import GeoFactSheet for bundle optimization while keeping SSR for SEO
+const GeoFactSheet = dynamic(() => import("@/components/geo/GeoFactSheet"), {
+  loading: () => <div className="h-64 bg-slate-100 dark:bg-slate-800 animate-pulse rounded-xl" />,
+  ssr: true
+})
 
 export const metadata: Metadata = {
   title: "Sinergi Braga Mandiri - Solusi Lingkungan & Perizinan Terpercaya",

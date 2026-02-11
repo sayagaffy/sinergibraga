@@ -45,13 +45,13 @@ export default async function ServicePage({ params }: { params: { slug: string }
     notFound()
   }
 
-  // Parse JSON fields (adapt for SQLite schema where features/statistics are Strings)
+  // Parse JSON fields (adapt for Postgres schema where features/statistics are Json)
   let features: string[] = []
   try {
     if (typeof serviceRaw.features === 'string') {
         features = JSON.parse(serviceRaw.features)
     } else {
-        features = serviceRaw.features // Fallback if it somehow is array (e.g. Postgres array)
+        features = serviceRaw.features as string[] || []
     }
   } catch (e) {
     console.error("Failed to parse features", e)
@@ -62,13 +62,13 @@ export default async function ServicePage({ params }: { params: { slug: string }
     if (typeof serviceRaw.statistics === 'string') {
         statistics = JSON.parse(serviceRaw.statistics)
     } else {
-        statistics = serviceRaw.statistics as any // Fallback
+        statistics = serviceRaw.statistics as Record<string, string | number> | null
     }
   } catch (e) {
       console.error("Failed to parse statistics", e)
   }
 
-  // Prepare data for SchemaOrg (ensure arrays)
+  // Prepare data for SchemaOrg
   const schemaData = {
       ...serviceRaw,
       features,
