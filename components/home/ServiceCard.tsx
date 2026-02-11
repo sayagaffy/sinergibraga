@@ -1,16 +1,16 @@
 'use client'
 
 import { motion } from "framer-motion"
-import { ArrowRight, LucideIcon } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import Link from "next/link"
-import { cn } from "@/lib/utils"
+import { ReactNode } from "react"
 
 interface ServiceCardProps {
   title: string
   description: string
   details: string
   href: string
-  icon?: LucideIcon
+  icon?: ReactNode
 }
 
 const cardVariants = {
@@ -29,7 +29,7 @@ const detailsVariants = {
   }
 }
 
-export function ServiceCard({ title, description, details, href, icon: Icon }: ServiceCardProps) {
+export function ServiceCard({ title, description, details, href, icon }: ServiceCardProps) {
   return (
     <Link href={href} className="block h-full">
       <motion.div
@@ -46,9 +46,9 @@ export function ServiceCard({ title, description, details, href, icon: Icon }: S
               <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-sbm-blue transition-colors">
                 {title}
               </h3>
-              {Icon && (
+              {icon && (
                 <div className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 group-hover:text-sbm-blue group-hover:bg-sbm-blue/10 transition-colors">
-                  <Icon className="w-6 h-6" />
+                  {icon}
                 </div>
               )}
             </div>

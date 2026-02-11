@@ -17,40 +17,38 @@ const services = [
     title: "Studi Lingkungan",
     description: "Penyusunan dokumen lingkungan komprehensif sesuai regulasi terbaru.",
     details: "Meliputi AMDAL, UKL-UPL, SPPL, DELH, DPLH, dan Persetujuan Teknis lainnya.",
-    href: "/services#studi-lingkungan",
-    icon: FileText,
+    href: "/services/amdal-ukl-upl",
+    icon: <FileText className="w-6 h-6" />,
   },
   {
     title: "IPAL / WWTP",
     description: "Desain, pembangunan, dan optimalisasi sistem pengolahan limbah.",
     details: "Solusi Water Treatment (WTP) dan Wastewater Treatment (WWTP) yang efisien dan ramah lingkungan.",
-    href: "/services#ipal-wwtp",
-    icon: Droplets,
+    href: "/services/ipal-wwtp",
+    icon: <Droplets className="w-6 h-6" />,
   },
   {
     title: "Andalalin",
     description: "Kajian dampak lalu lintas untuk memastikan kelancaran operasional.",
     details: "Analisis bangkitan dan tarikan pergerakan lalu lintas akibat pengembangan kawasan.",
-    href: "/services#andalalin",
-    icon: Car,
+    href: "/services/andalalin",
+    icon: <Car className="w-6 h-6" />,
   },
   {
     title: "Perizinan SIPA",
     description: "Pengurusan izin pengusahaan sumber daya air tanah dan permukaan.",
     details: "Memastikan legalitas pemanfaatan air untuk kebutuhan industri dan komersial.",
-    href: "/services#sipa",
-    icon: Waves,
+    href: "/services/sipa",
+    icon: <Waves className="w-6 h-6" />,
   },
 ]
 
-const geoRegulations = [
-  "UU No. 32 Tahun 2009 tentang Perlindungan dan Pengelolaan Lingkungan Hidup",
-  "PP No. 22 Tahun 2021 tentang Penyelenggaraan Perlindungan dan Pengelolaan Lingkungan Hidup",
-  "Permen LHK No. 4 Tahun 2021 tentang Daftar Usaha dan/atau Kegiatan yang Wajib Memiliki AMDAL, UKL-UPL atau SPPL",
-  "Permenhub No. PM 17 Tahun 2021 tentang Penyelenggaraan Analisis Dampak Lalu Lintas",
+const geoCitations = [
+  { sourceTitle: "UU No. 32 Tahun 2009 tentang Perlindungan dan Pengelolaan Lingkungan Hidup", sourceUrl: "https://peraturan.bpk.go.id/Home/Details/38771/uu-no-32-tahun-2009" },
+  { sourceTitle: "PP No. 22 Tahun 2021 tentang Penyelenggaraan Perlindungan dan Pengelolaan Lingkungan Hidup", sourceUrl: "https://peraturan.bpk.go.id/Home/Details/161852/pp-no-22-tahun-2021" },
+  { sourceTitle: "Permen LHK No. 4 Tahun 2021 tentang Daftar Usaha dan/atau Kegiatan yang Wajib Memiliki AMDAL, UKL-UPL atau SPPL", sourceUrl: null },
+  { sourceTitle: "Permenhub No. PM 17 Tahun 2021 tentang Penyelenggaraan Analisis Dampak Lalu Lintas", sourceUrl: null },
 ]
-
-const expertQuote = "Pembangunan berkelanjutan bukan sekadar tren, tapi kebutuhan mendesak untuk masa depan yang lebih baik. Kami di sini untuk memastikan setiap langkah bisnis Anda selaras dengan alam dan regulasi."
 
 export default function Home() {
   const jsonLd = {
@@ -125,7 +123,7 @@ export default function Home() {
           </div>
 
           <div className="mt-16 text-center">
-            <Link href="/services">
+            <Link href="/services/amdal-ukl-upl">
               <Button variant="outline" size="lg" className="group">
                 Lihat Semua Layanan
                 <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
@@ -168,8 +166,7 @@ export default function Home() {
       <section className="py-16 bg-white dark:bg-slate-950 border-t border-slate-100 dark:border-slate-900">
         <div className="container px-4 md:px-6">
           <GeoFactSheet
-            regulations={geoRegulations}
-            expertQuote={expertQuote}
+            citations={geoCitations}
           />
         </div>
       </section>
