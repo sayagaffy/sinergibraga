@@ -46,13 +46,15 @@ export function SchemaOrg({ type = 'Organization', data }: SchemaOrgProps) {
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
         "name": "Layanan Lingkungan",
-        "itemListElement": data.features?.map((feat: string) => ({
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": feat
-          }
-        }))
+        "itemListElement": Array.isArray(data.features)
+          ? data.features.map((feat: string) => ({
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": feat
+              }
+            }))
+          : []
       }
     }
     schemaGraph.push(serviceSchema)
@@ -71,6 +73,22 @@ export function SchemaOrg({ type = 'Organization', data }: SchemaOrgProps) {
             }
         }
         schemaGraph.push(expertSchema)
+    }
+
+    // Add FAQ Schema
+    if (data.faqs && data.faqs.length > 0) {
+      const faqSchema = {
+        "@type": "FAQPage",
+        "mainEntity": data.faqs.map((faq: any) => ({
+          "@type": "Question",
+          "name": faq.question,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": faq.answer
+          }
+        }))
+      }
+      schemaGraph.push(faqSchema)
     }
   }
 

@@ -3,18 +3,18 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 model Expert {
   id          String   @id @default(cuid())
   name        String
   role        String
-  expertQuote String   @db.Text
+  expertQuote String
   photoUrl    String?
   linkedinUrl String?
-  credentials String   @db.Text
+  credentials String
 
   services    Service[]
   portfolioItems PortfolioItem[]
@@ -27,7 +27,7 @@ model Citation {
   id            String   @id @default(cuid())
   sourceTitle   String
   sourceUrl     String?
-  contextClause String?  @db.Text
+  contextClause String?
 
   services      Service[]
   portfolioItems PortfolioItem[]
@@ -41,12 +41,14 @@ model Service {
   title       String
   slug        String   @unique
   description String
-  features    String[]
-  geoFacts    String   @db.Text
+  features    String   // Stored as JSON string
+  geoFacts    String
   icon        String
-  statistics  Json?
+  statistics  String?  // Stored as JSON string
 
   citations   Citation[]
+  faqs        FAQ[]
+  glossaryTerms GlossaryTerm[]
 
   expert      Expert? @relation(fields: [expertId], references: [id])
   expertId    String?
@@ -76,6 +78,29 @@ model PortfolioItem {
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model FAQ {
+  id        String   @id @default(cuid())
+  question  String
+  answer    String
+
+  service   Service  @relation(fields: [serviceId], references: [id])
+  serviceId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model GlossaryTerm {
+  id         String   @id @default(cuid())
+  term       String   @unique
+  definition String
+
+  services   Service[]
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model Testimonial {

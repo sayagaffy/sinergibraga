@@ -5,25 +5,13 @@ import { GeoFactSheet } from "@/components/geo/GeoFactSheet"
 import { TechSpecs } from "@/components/geo/TechSpecs"
 import { SchemaOrg } from "@/components/seo/SchemaOrg"
 import { ExpertInsight } from "@/components/geo/ExpertInsight"
+import { FAQSection } from "@/components/geo/FAQSection"
+import { GlossarySection } from "@/components/geo/GlossarySection"
 import { Section } from "@/components/ui/Section"
 import { Card } from "@/components/ui/Card"
 import { Button } from "@/components/ui/Button"
 import Link from "next/link"
 import { ArrowLeft, CheckCircle2 } from "lucide-react"
-import { Expert, Citation } from "@prisma/client"
-
-type ServiceWithRelations = {
-  id: string;
-  title: string;
-  slug: string;
-  description: string;
-  features: string[];
-  geoFacts: string;
-  icon: string;
-  statistics: any;
-  expert: Expert | null;
-  citations: Citation[];
-}
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const service = await prisma.service.findUnique({
@@ -48,6 +36,8 @@ export default async function ServicePage({ params }: { params: { slug: string }
     include: {
       expert: true,
       citations: true,
+      faqs: true,
+      glossaryTerms: true,
     },
   })
 
@@ -55,15 +45,39 @@ export default async function ServicePage({ params }: { params: { slug: string }
     notFound()
   }
 
-  // Cast to our type safely
-  const service = serviceRaw as unknown as ServiceWithRelations;
+  // Parse JSON fields (adapt for SQLite schema where features/statistics are Strings)
+  let features: string[] = []
+  try {
+    if (typeof serviceRaw.features === 'string') {
+        features = JSON.parse(serviceRaw.features)
+    } else {
+        features = serviceRaw.features // Fallback if it somehow is array (e.g. Postgres array)
+    }
+  } catch (e) {
+    console.error("Failed to parse features", e)
+  }
 
-  // Ensure statistics is treated as a Record<string, string | number>
-  const stats = service.statistics as Record<string, string | number> | null;
+  let statistics: Record<string, string | number> | null = null
+  try {
+    if (typeof serviceRaw.statistics === 'string') {
+        statistics = JSON.parse(serviceRaw.statistics)
+    } else {
+        statistics = serviceRaw.statistics as any // Fallback
+    }
+  } catch (e) {
+      console.error("Failed to parse statistics", e)
+  }
+
+  // Prepare data for SchemaOrg (ensure arrays)
+  const schemaData = {
+      ...serviceRaw,
+      features,
+      statistics
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pb-20">
-      <SchemaOrg type="Service" data={service} />
+      <SchemaOrg type="Service" data={schemaData} />
 
       {/* Header */}
       <div className="bg-slate-900 pt-32 pb-24 text-white relative overflow-hidden">
@@ -73,8 +87,8 @@ export default async function ServicePage({ params }: { params: { slug: string }
             <ArrowLeft className="w-4 h-4 mr-2" />
             Kembali ke Layanan
           </Link>
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 max-w-4xl">{service.title}</h1>
-          <p className="text-xl text-slate-300 max-w-2xl leading-relaxed">{service.description}</p>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 max-w-4xl">{serviceRaw.title}</h1>
+          <p className="text-xl text-slate-300 max-w-2xl leading-relaxed">{serviceRaw.description}</p>
         </div>
       </div>
 
@@ -84,33 +98,48 @@ export default async function ServicePage({ params }: { params: { slug: string }
           <div className="lg:col-span-2 space-y-12">
 
             {/* GEO Fact Sheet */}
-            <GeoFactSheet
-              statistics={stats}
-              citations={service.citations}
-            />
+            <div id="fact-sheet">
+                <GeoFactSheet
+                statistics={statistics}
+                citations={serviceRaw.citations}
+                expertQuote={serviceRaw.expert?.expertQuote}
+                />
+            </div>
 
             {/* Technical Description */}
-            <Section>
+            <Section id="technical-desc">
               <h2 className="text-2xl font-bold mb-4 text-slate-900 dark:text-white">Deskripsi Teknis</h2>
               <div className="prose prose-lg dark:prose-invert max-w-none">
                 <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
-                  {service.geoFacts}
+                  {serviceRaw.geoFacts}
                 </p>
               </div>
             </Section>
 
             {/* Tech Specs / Features */}
-            {service.features && service.features.length > 0 && (
-              <TechSpecs specs={service.features} title="Lingkup Layanan & Fitur" />
+            {features && features.length > 0 && (
+              <div id="features">
+                  <TechSpecs specs={features} title="Lingkup Layanan & Fitur" />
+              </div>
             )}
 
             {/* Expert Insight */}
-            {service.expert && (
-              <Section>
+            {serviceRaw.expert && (
+              <Section id="expert-insight">
                  <h2 className="text-2xl font-bold mb-6 text-slate-900 dark:text-white">Wawasan Ahli</h2>
-                <ExpertInsight expert={service.expert} />
+                <ExpertInsight expert={serviceRaw.expert} />
               </Section>
             )}
+
+             {/* FAQ Section */}
+             {serviceRaw.faqs && serviceRaw.faqs.length > 0 && (
+                 <FAQSection faqs={serviceRaw.faqs} />
+             )}
+
+             {/* Glossary Section */}
+             {serviceRaw.glossaryTerms && serviceRaw.glossaryTerms.length > 0 && (
+                 <GlossarySection terms={serviceRaw.glossaryTerms} />
+             )}
 
           </div>
 

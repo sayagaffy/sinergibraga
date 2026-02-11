@@ -1,7 +1,7 @@
 'use client'
 
 import { Card } from "@/components/ui/Card"
-import { FileText, Trophy, Scale } from "lucide-react"
+import { FileText, Trophy, Scale, Quote } from "lucide-react"
 import Link from "next/link"
 
 interface GeoFactSheetProps {
@@ -11,13 +11,14 @@ interface GeoFactSheetProps {
     sourceUrl?: string | null
     contextClause?: string | null
   }> | null
+  expertQuote?: string | null
 }
 
-export function GeoFactSheet({ statistics, citations }: GeoFactSheetProps) {
-  if (!statistics && (!citations || citations.length === 0)) return null
+export function GeoFactSheet({ statistics, citations, expertQuote }: GeoFactSheetProps) {
+  if (!statistics && (!citations || citations.length === 0) && !expertQuote) return null
 
   return (
-    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
+    <div className="grid gap-6 md:grid-cols-2">
       {/* Statistics Card */}
       {statistics && (
         <Card className="bg-gradient-to-br from-white to-blue-50 dark:from-slate-900 dark:to-slate-800 border-l-4 border-l-sbm-blue group hover:shadow-xl hover:translate-y-[-4px] transition-all duration-300">
@@ -76,6 +77,26 @@ export function GeoFactSheet({ statistics, citations }: GeoFactSheetProps) {
               </li>
             ))}
           </ul>
+        </Card>
+      )}
+
+      {/* Expert Quote Card */}
+      {expertQuote && (
+        <Card className="col-span-1 md:col-span-2 bg-slate-900 text-white border-l-4 border-l-sbm-blue relative overflow-hidden group hover:shadow-xl hover:scale-[1.01] transition-all duration-500">
+           <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+              <Quote className="w-32 h-32" />
+           </div>
+           <div className="relative z-10 flex gap-4 p-4 items-start">
+              <div className="p-3 bg-white/10 rounded-xl shrink-0">
+                <Quote className="w-6 h-6 text-sbm-blue" />
+              </div>
+              <div>
+                <h3 className="font-bold text-xl text-white mb-2">Kutipan Ahli</h3>
+                <blockquote className="text-lg italic font-light text-slate-200 leading-relaxed">
+                  "{expertQuote}"
+                </blockquote>
+              </div>
+           </div>
         </Card>
       )}
     </div>
