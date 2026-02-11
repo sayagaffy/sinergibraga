@@ -13,14 +13,30 @@ interface ServiceCardProps {
   icon?: LucideIcon
 }
 
+const cardVariants = {
+  hover: {
+    y: -5,
+    transition: { type: "spring", stiffness: 300, damping: 20 }
+  }
+}
+
+const detailsVariants = {
+  hidden: { height: 0, opacity: 0 },
+  hover: {
+    height: "auto",
+    opacity: 1,
+    transition: { duration: 0.3, ease: "easeOut" }
+  }
+}
+
 export function ServiceCard({ title, description, details, href, icon: Icon }: ServiceCardProps) {
   return (
     <Link href={href} className="block h-full">
       <motion.div
         className="group relative h-full overflow-hidden rounded-2xl bg-white/50 dark:bg-slate-900/50 backdrop-blur-md border border-slate-200 dark:border-slate-800 p-6 md:p-8 transition-all duration-300 hover:border-sbm-blue/50 hover:shadow-lg hover:shadow-sbm-blue/5"
-        initial={{ y: 0 }}
-        whileHover={{ y: -5 }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        initial="rest"
+        whileHover="hover"
+        variants={cardVariants}
       >
         <div className="absolute inset-0 bg-gradient-to-br from-sbm-blue/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -42,8 +58,8 @@ export function ServiceCard({ title, description, details, href, icon: Icon }: S
             </p>
 
             <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              whileHover={{ height: "auto", opacity: 1 }}
+              variants={detailsVariants}
+              initial="hidden"
               className="overflow-hidden"
             >
               <p className="pt-4 text-xs font-medium text-sbm-teal dark:text-teal-400 border-t border-slate-100 dark:border-slate-800 mt-4">

@@ -21,10 +21,15 @@ export function Navbar() {
   const [scrolled, setScrolled] = React.useState(false)
   const pathname = usePathname()
 
+  // Determine if we are on the homepage (transparent/white text initially)
+  const isHomePage = pathname === "/"
+
   React.useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20)
     }
+    // Check initial scroll position
+    handleScroll()
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
@@ -34,13 +39,23 @@ export function Navbar() {
     setIsOpen(false)
   }, [pathname])
 
+  // Determine styles based on scroll and route
+  const isTransparent = isHomePage && !scrolled
+  const textColor = isTransparent ? "text-white" : "text-slate-900 dark:text-white"
+  const subTextColor = isTransparent ? "text-slate-300" : "text-slate-500 dark:text-slate-400"
+  const buttonVariant = isTransparent ? "bg-white text-sbm-blue hover:bg-white/90" : "bg-sbm-blue text-white shadow-lg shadow-sbm-blue/20"
+
+  // Specific style for non-home pages (always have background unless scrolled logic overrides)
+  const headerBackground = isHomePage
+    ? (scrolled ? "bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border-slate-200 dark:border-slate-800 shadow-sm" : "bg-transparent border-transparent")
+    : "bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm"
+
   return (
     <header
       className={cn(
-        "fixed top-0 w-full z-50 transition-all duration-300 border-b",
-        scrolled
-          ? "bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border-slate-200 dark:border-slate-800 py-3 shadow-sm"
-          : "bg-transparent border-transparent py-5"
+        "fixed top-0 w-full z-50 transition-all duration-300",
+        headerBackground,
+        isHomePage && !scrolled ? "py-5" : "py-3"
       )}
     >
       <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
@@ -49,10 +64,10 @@ export function Navbar() {
             S
           </div>
           <div className="flex flex-col">
-            <span className={cn("font-bold text-lg leading-tight transition-colors", scrolled ? "text-slate-900 dark:text-white" : "text-white")}>
+            <span className={cn("font-bold text-lg leading-tight transition-colors", textColor)}>
               Sinergi Braga Mandiri
             </span>
-            <span className={cn("text-[10px] tracking-wider transition-colors", scrolled ? "text-slate-500 dark:text-slate-400" : "text-slate-300")}>
+            <span className={cn("text-[10px] tracking-wider transition-colors", subTextColor)}>
               ENVIRONMENTAL CONSULTANT
             </span>
           </div>
@@ -60,33 +75,31 @@ export function Navbar() {
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "text-sm font-medium transition-colors hover:text-sbm-blue relative py-1",
-                pathname === item.href
-                  ? "text-sbm-blue font-semibold"
-                  : scrolled ? "text-slate-600 dark:text-slate-300" : "text-slate-200 hover:text-white"
-              )}
-            >
-              {item.name}
-              {pathname === item.href && (
-                <motion.div
-                  layoutId="navbar-indicator"
-                  className="absolute -bottom-1 left-0 right-0 h-0.5 bg-sbm-blue rounded-full"
-                />
-              )}
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            const isActive = pathname === item.href
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "text-sm font-medium transition-colors relative py-1",
+                  isActive
+                    ? "text-sbm-blue font-semibold"
+                    : (isTransparent ? "text-slate-200 hover:text-white" : "text-slate-600 dark:text-slate-300 hover:text-sbm-blue")
+                )}
+              >
+                {item.name}
+                {isActive && (
+                  <motion.div
+                    layoutId="navbar-indicator"
+                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-sbm-blue rounded-full"
+                  />
+                )}
+              </Link>
+            )
+          })}
           <Link href="/contact">
-            <Button size="sm" className={cn(
-              "gap-2 transition-all",
-              scrolled
-                ? "bg-sbm-blue text-white shadow-lg shadow-sbm-blue/20"
-                : "bg-white text-sbm-blue hover:bg-white/90"
-            )}>
+            <Button size="sm" className={cn("gap-2 transition-all", buttonVariant)}>
               Hubungi Kami <ArrowRight className="w-4 h-4" />
             </Button>
           </Link>
@@ -94,7 +107,7 @@ export function Navbar() {
 
         {/* Mobile Toggle */}
         <button
-          className={cn("md:hidden p-2 transition-colors", scrolled ? "text-slate-900 dark:text-white" : "text-white")}
+          className={cn("md:hidden p-2 transition-colors", textColor)}
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <X /> : <Menu />}
