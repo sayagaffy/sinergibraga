@@ -102,3 +102,5 @@ export function GeoFactSheet({ statistics, citations, expertQuote }: GeoFactShee
     </div>
   )
 }
+
+export default GeoFactSheet;
