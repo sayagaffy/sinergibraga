@@ -1,17 +1,17 @@
-import { Metadata } from 'next'
-import { notFound } from 'next/navigation'
-import prisma from "@/lib/prisma"
-import { GeoFactSheet } from "@/components/geo/GeoFactSheet"
-import { TechSpecs } from "@/components/geo/TechSpecs"
-import { SchemaOrg } from "@/components/seo/SchemaOrg"
 import { ExpertInsight } from "@/components/geo/ExpertInsight"
 import { FAQSection } from "@/components/geo/FAQSection"
+import { GeoFactSheet } from "@/components/geo/GeoFactSheet"
 import { GlossarySection } from "@/components/geo/GlossarySection"
-import { Section } from "@/components/ui/Section"
-import { Card } from "@/components/ui/Card"
+import { TechSpecs } from "@/components/geo/TechSpecs"
+import { SchemaOrg } from "@/components/seo/SchemaOrg"
 import { Button } from "@/components/ui/Button"
-import Link from "next/link"
+import { Card } from "@/components/ui/Card"
+import { Section } from "@/components/ui/Section"
+import prisma from "@/lib/prisma"
 import { ArrowLeft, CheckCircle2 } from "lucide-react"
+import { Metadata } from 'next'
+import Link from "next/link"
+import { notFound } from 'next/navigation'
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const service = await prisma.service.findUnique({
@@ -49,9 +49,9 @@ export default async function ServicePage({ params }: { params: { slug: string }
   let features: string[] = []
   try {
     if (typeof serviceRaw.features === 'string') {
-        features = JSON.parse(serviceRaw.features)
+      features = JSON.parse(serviceRaw.features)
     } else {
-        features = serviceRaw.features as string[] || []
+      features = serviceRaw.features as string[] || []
     }
   } catch (e) {
     console.error("Failed to parse features", e)
@@ -60,57 +60,57 @@ export default async function ServicePage({ params }: { params: { slug: string }
   let statistics: Record<string, string | number> | null = null
   try {
     if (typeof serviceRaw.statistics === 'string') {
-        statistics = JSON.parse(serviceRaw.statistics)
+      statistics = JSON.parse(serviceRaw.statistics)
     } else {
-        statistics = serviceRaw.statistics as Record<string, string | number> | null
+      statistics = serviceRaw.statistics as Record<string, string | number> | null
     }
   } catch (e) {
-      console.error("Failed to parse statistics", e)
+    console.error("Failed to parse statistics", e)
   }
 
   // Prepare data for SchemaOrg
   const schemaData = {
-      ...serviceRaw,
-      features,
-      statistics
+    ...serviceRaw,
+    features,
+    statistics
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pb-20">
+    <div className="min-h-screen bg-slate-50 pb-20">
       <SchemaOrg type="Service" data={schemaData} />
 
-      {/* Header */}
-      <div className="bg-slate-900 pt-32 pb-24 text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-sbm-blue/20" />
+      {/* Header - Light Theme */}
+      <div className="bg-white border-b border-slate-200 pt-32 pb-24 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-1/3 h-full bg-sbm-blue/5 skew-x-12" />
         <div className="container mx-auto px-6 relative z-10">
-          <Link href="/services" className="inline-flex items-center text-slate-400 hover:text-white mb-6 transition-colors">
+          <Link href="/services" className="inline-flex items-center text-slate-500 hover:text-sbm-blue mb-6 transition-colors font-medium">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Kembali ke Layanan
           </Link>
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 max-w-4xl">{serviceRaw.title}</h1>
-          <p className="text-xl text-slate-300 max-w-2xl leading-relaxed">{serviceRaw.description}</p>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 max-w-4xl text-slate-900">{serviceRaw.title}</h1>
+          <p className="text-xl text-slate-600 max-w-2xl leading-relaxed">{serviceRaw.description}</p>
         </div>
       </div>
 
-      <div className="container mx-auto px-6 -mt-16 relative z-20">
+      <div className="container mx-auto px-6 -mt-10 relative z-20">
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Main Content */}
-          <div className="lg:col-span-2 space-y-12">
+          <div className="lg:col-span-2 space-y-12 pt-10">
 
             {/* GEO Fact Sheet */}
             <div id="fact-sheet">
-                <GeoFactSheet
+              <GeoFactSheet
                 statistics={statistics}
                 citations={serviceRaw.citations}
                 expertQuote={serviceRaw.expert?.expertQuote}
-                />
+              />
             </div>
 
             {/* Technical Description */}
-            <Section id="technical-desc">
-              <h2 className="text-2xl font-bold mb-4 text-slate-900 dark:text-white">Deskripsi Teknis</h2>
-              <div className="prose prose-lg dark:prose-invert max-w-none">
-                <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+            <Section id="technical-desc" className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
+              <h2 className="text-2xl font-bold mb-4 text-slate-900">Deskripsi Teknis</h2>
+              <div className="prose prose-lg prose-slate max-w-none">
+                <p className="text-slate-700 leading-relaxed">
                   {serviceRaw.geoFacts}
                 </p>
               </div>
@@ -119,46 +119,46 @@ export default async function ServicePage({ params }: { params: { slug: string }
             {/* Tech Specs / Features */}
             {features && features.length > 0 && (
               <div id="features">
-                  <TechSpecs specs={features} title="Lingkup Layanan & Fitur" />
+                <TechSpecs specs={features} title="Lingkup Layanan & Fitur" />
               </div>
             )}
 
             {/* Expert Insight */}
             {serviceRaw.expert && (
               <Section id="expert-insight">
-                 <h2 className="text-2xl font-bold mb-6 text-slate-900 dark:text-white">Wawasan Ahli</h2>
+                <h2 className="text-2xl font-bold mb-6 text-slate-900">Wawasan Ahli</h2>
                 <ExpertInsight expert={serviceRaw.expert} />
               </Section>
             )}
 
-             {/* FAQ Section */}
-             {serviceRaw.faqs && serviceRaw.faqs.length > 0 && (
-                 <FAQSection faqs={serviceRaw.faqs} />
-             )}
+            {/* FAQ Section */}
+            {serviceRaw.faqs && serviceRaw.faqs.length > 0 && (
+              <FAQSection faqs={serviceRaw.faqs} />
+            )}
 
-             {/* Glossary Section */}
-             {serviceRaw.glossaryTerms && serviceRaw.glossaryTerms.length > 0 && (
-                 <GlossarySection terms={serviceRaw.glossaryTerms} />
-             )}
+            {/* Glossary Section */}
+            {serviceRaw.glossaryTerms && serviceRaw.glossaryTerms.length > 0 && (
+              <GlossarySection terms={serviceRaw.glossaryTerms} />
+            )}
 
           </div>
 
           {/* Sidebar */}
           <div className="space-y-8">
-            <Card className="bg-white dark:bg-slate-900 border-t-4 border-t-sbm-blue sticky top-24 shadow-lg">
-              <h3 className="font-bold text-xl mb-6 text-slate-900 dark:text-white">Mengapa Memilih Kami?</h3>
+            <Card className="bg-white border-t-4 border-t-sbm-blue sticky top-24 shadow-lg border-x border-b border-slate-200">
+              <h3 className="font-bold text-xl mb-6 text-slate-900">Mengapa Memilih Kami?</h3>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-sbm-teal mt-0.5" />
-                  <span className="text-slate-600 dark:text-slate-300 text-sm">Tim Ahli Bersertifikat (KTPA/ATPA)</span>
+                  <span className="text-slate-600 text-sm">Tim Ahli Bersertifikat (KTPA/ATPA)</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-sbm-teal mt-0.5" />
-                  <span className="text-slate-600 dark:text-slate-300 text-sm">Kepatuhan Regulasi 100%</span>
+                  <span className="text-slate-600 text-sm">Kepatuhan Regulasi 100%</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-sbm-teal mt-0.5" />
-                  <span className="text-slate-600 dark:text-slate-300 text-sm">Pendampingan Hingga Izin Terbit</span>
+                  <span className="text-slate-600 text-sm">Pendampingan Hingga Izin Terbit</span>
                 </li>
               </ul>
 

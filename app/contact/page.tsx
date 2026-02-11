@@ -1,10 +1,10 @@
 'use client'
 
-import { useState } from 'react'
-import { Section } from "@/components/ui/Section"
-import { Card } from "@/components/ui/Card"
 import { Button } from "@/components/ui/Button"
-import { MapPin, Phone, Mail, Clock } from "lucide-react"
+import { Card } from "@/components/ui/Card"
+import { Section } from "@/components/ui/Section"
+import { Clock, Mail, MapPin, Phone } from "lucide-react"
+import { useState } from 'react'
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' })
@@ -47,12 +47,16 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="pt-10">
-      <section className="bg-slate-900 py-20 text-white">
+    <div className="pt-24 pb-20">
+      <section className="bg-white py-12 border-b border-slate-100">
         <div className="container px-4 md:px-6 text-center">
-          <h1 className="text-4xl font-bold mb-6">Hubungi Kami</h1>
-          <p className="text-xl text-slate-400 max-w-3xl mx-auto">
-            Tim kami siap membantu Anda memberikan solusi terbaik untuk kebutuhan lingkungan perusahaan Anda.
+          <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full bg-blue-50 text-sbm-blue text-sm font-medium">
+            <Phone className="w-4 h-4" />
+            <span>Hubungi Kami</span>
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900 tracking-tight">Siap Membantu Anda</h1>
+          <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+            Tim kami siap memberikan konsultasi dan solusi terbaik untuk kebutuhan lingkungan perusahaan Anda.
           </p>
         </div>
       </section>
@@ -188,10 +192,10 @@ export default function ContactPage() {
 
               {/* Map Placeholder */}
               <div className="w-full h-64 bg-slate-200 rounded-xl overflow-hidden relative">
-                 <div className="absolute inset-0 flex items-center justify-center text-slate-500">
-                    <span className="flex items-center gap-2"><MapPin /> Google Maps Embed</span>
-                 </div>
-                 <div className="w-full h-full bg-slate-300" />
+                <div className="absolute inset-0 flex items-center justify-center text-slate-500">
+                  <span className="flex items-center gap-2"><MapPin /> Google Maps Embed</span>
+                </div>
+                <div className="w-full h-full bg-slate-300" />
               </div>
             </div>
           </div>

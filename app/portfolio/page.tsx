@@ -1,11 +1,11 @@
-import { Metadata } from "next"
-import Link from "next/link"
-import Image from "next/image"
 import { ArrowRight, MapPin } from "lucide-react"
+import { Metadata } from "next"
+import Image from "next/image"
+import Link from "next/link"
 
-import prisma from "@/lib/prisma"
-import { Section } from "@/components/ui/Section"
 import { Card } from "@/components/ui/Card"
+import { Section } from "@/components/ui/Section"
+import prisma from "@/lib/prisma"
 
 export const metadata: Metadata = {
   title: "Portofolio & Studi Kasus",
@@ -18,11 +18,15 @@ export default async function PortfolioPage() {
   })
 
   return (
-    <div className="pt-10">
-      <section className="bg-slate-900 py-20 text-white">
+    <div className="pt-24 pb-20 bg-slate-50 min-h-screen">
+      <section className="bg-white py-12 border-b border-slate-200 mb-12">
         <div className="container px-4 md:px-6 text-center">
-          <h1 className="text-4xl font-bold mb-6">Portofolio & Pengalaman</h1>
-          <p className="text-xl text-slate-400 max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full bg-blue-50 text-sbm-blue text-sm font-medium">
+            <MapPin className="w-4 h-4" />
+            <span>Studi Kasus</span>
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900 tracking-tight">Portofolio & Pengalaman</h1>
+          <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
             Rekam jejak keberhasilan kami dalam memberikan solusi lingkungan yang terpercaya dan berkelanjutan.
           </p>
         </div>
@@ -32,19 +36,19 @@ export default async function PortfolioPage() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {items.map((item) => (
             <Link key={item.id} href={`/portfolio/${item.slug}`} className="h-full block">
-              <Card hoverEffect className="h-full p-0 overflow-hidden flex flex-col group cursor-pointer border-0 shadow-lg bg-white dark:bg-slate-800">
+              <Card hoverEffect className="h-full p-0 overflow-hidden flex flex-col group cursor-pointer border border-slate-200 shadow-sm hover:shadow-xl bg-white transition-all duration-300">
                 {/* Image Container */}
                 <div className="relative h-56 w-full bg-slate-200 overflow-hidden">
                   {item.imageUrl ? (
-                     <div className="relative w-full h-full">
-                        <Image
-                          src={item.imageUrl}
-                          alt={item.title}
-                          fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          className="object-cover transition-transform duration-700 group-hover:scale-110"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60" />
-                     </div>
+                    <div className="relative w-full h-full">
+                      <Image
+                        src={item.imageUrl}
+                        alt={item.title}
+                        fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60" />
+                    </div>
                   ) : (
                     <div className="absolute inset-0 bg-gradient-to-br from-sbm-blue to-sbm-teal opacity-50" />
                   )}
@@ -74,8 +78,8 @@ export default async function PortfolioPage() {
                   </p>
 
                   <div className="mt-auto pt-4 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between text-sbm-blue font-medium text-sm">
-                     <span className="group-hover:underline decoration-sbm-blue underline-offset-4 decoration-2">Lihat Studi Kasus</span>
-                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                    <span className="group-hover:underline decoration-sbm-blue underline-offset-4 decoration-2">Lihat Studi Kasus</span>
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </div>
                 </div>
               </Card>

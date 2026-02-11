@@ -99,10 +99,10 @@ async function main() {
       title: "AMDAL & UKL-UPL",
       slug: "amdal-ukl-upl",
       description: "Penyusunan dokumen lingkungan hidup untuk perizinan berusaha dan persetujuan teknis.",
-      features: ["AMDAL", "UKL-UPL", "SPPL", "DELH", "DPLH", "Kajian IPLC", "Rekomendasi B3"],
+      features: JSON.stringify(["AMDAL", "UKL-UPL", "SPPL", "DELH", "DPLH", "Kajian IPLC", "Rekomendasi B3"]),
       geoFacts: "Menurut PP No. 22 Tahun 2021, setiap usaha yang berdampak penting wajib memiliki AMDAL. SBM menyediakan penyusunan dokumen lingkungan dengan tim bersertifikat KTPA/ATPA.",
       icon: "FileText",
-      statistics: { "projectsCompleted": 150, "complianceRate": "100%", "avgApprovalTime": "3 Bulan" },
+      statistics: JSON.stringify({ "projectsCompleted": 150, "complianceRate": "100%", "avgApprovalTime": "3 Bulan" }),
       expertId: expertBudi.id,
       citations: [citPP22, citUU32],
       faqs: [
@@ -114,10 +114,10 @@ async function main() {
       title: "Instalasi Pengolahan Air Limbah (IPAL/WWTP)",
       slug: "ipal-wwtp",
       description: "Desain dan optimalisasi sistem pengolahan limbah cair industri dan domestik.",
-      features: ["Design Engineering", "Optimalisasi Sistem", "Konsultasi Teknis"],
+      features: JSON.stringify(["Design Engineering", "Optimalisasi Sistem", "Konsultasi Teknis"]),
       geoFacts: "Pengolahan limbah cair harus memenuhi baku mutu sesuai Permen LHK No. 68 Tahun 2016. SBM menggunakan teknologi bio-filter dan chemical treatment terkini.",
       icon: "Droplets",
-      statistics: { "systemsDesigned": 45, "waterRecycled": "5000 m3/tahun", "energySaving": "20%" },
+      statistics: JSON.stringify({ "systemsDesigned": 45, "waterRecycled": "5000 m3/tahun", "energySaving": "20%" }),
       expertId: expertSiti.id,
       citations: [citPermen68],
       faqs: [
@@ -128,10 +128,10 @@ async function main() {
       title: "Andalalin (Analisis Dampak Lalu Lintas)",
       slug: "andalalin",
       description: "Kajian dampak lalu lintas untuk pembangunan pusat kegiatan baru.",
-      features: ["Simulasi Lalu Lintas", "Manajemen Rekayasa Lalin", "Rekomendasi Teknis"],
+      features: JSON.stringify(["Simulasi Lalu Lintas", "Manajemen Rekayasa Lalin", "Rekomendasi Teknis"]),
       geoFacts: "Andalalin diwajibkan bagi bangkitan lalu lintas tinggi sesuai PM Perhubungan No. 75 Tahun 2015. SBM membantu mitigasi kemacetan area proyek.",
       icon: "TrafficCone",
-      statistics: { "studiesConducted": 80, "trafficFlowImprovement": "30%", "permitSuccess": "100%" },
+      statistics: JSON.stringify({ "studiesConducted": 80, "trafficFlowImprovement": "30%", "permitSuccess": "100%" }),
       expertId: expertHendra.id,
       citations: [citPM75],
       faqs: [
@@ -139,18 +139,18 @@ async function main() {
       ]
     },
     {
-        title: "Sertifikat Laik Fungsi (SLF)",
-        slug: "slf",
-        description: "Pemeriksaan kelaikan fungsi bangunan gedung sebelum dimanfaatkan.",
-        features: ["Pemeriksaan Arsitektur", "Pemeriksaan Struktur", "Pemeriksaan Utilitas"],
-        geoFacts: "SLF adalah syarat mutlak pemanfaatan bangunan gedung sesuai UU No. 28 Tahun 2002 tentang Bangunan Gedung.",
-        icon: "BuildingCheck",
-        statistics: { "buildingsCertified": 40, "safetyCompliance": "100%", "auditSpeed": "14 Hari" },
-        expertId: expertBudi.id,
-        citations: [],
-        faqs: [
-            { question: "Berapa masa berlaku SLF?", answer: "SLF berlaku 5 tahun untuk bangunan non-rumah tinggal dan 20 tahun untuk rumah tinggal." }
-        ]
+      title: "Sertifikat Laik Fungsi (SLF)",
+      slug: "slf",
+      description: "Pemeriksaan kelaikan fungsi bangunan gedung sebelum dimanfaatkan.",
+      features: JSON.stringify(["Pemeriksaan Arsitektur", "Pemeriksaan Struktur", "Pemeriksaan Utilitas"]),
+      geoFacts: "SLF adalah syarat mutlak pemanfaatan bangunan gedung sesuai UU No. 28 Tahun 2002 tentang Bangunan Gedung.",
+      icon: "BuildingCheck",
+      statistics: JSON.stringify({ "buildingsCertified": 40, "safetyCompliance": "100%", "auditSpeed": "14 Hari" }),
+      expertId: expertBudi.id,
+      citations: [],
+      faqs: [
+        { question: "Berapa masa berlaku SLF?", answer: "SLF berlaku 5 tahun untuk bangunan non-rumah tinggal dan 20 tahun untuk rumah tinggal." }
+      ]
     }
   ]
 
@@ -177,11 +177,11 @@ async function main() {
 
       for (const faq of faqs) {
         await prisma.fAQ.create({
-            data: {
-                question: faq.question,
-                answer: faq.answer,
-                serviceId: service.id
-            }
+          data: {
+            question: faq.question,
+            answer: faq.answer,
+            serviceId: service.id
+          }
         })
       }
     }
@@ -192,56 +192,56 @@ async function main() {
   // Add Portfolio Items with new images
   const portfolioItems = [
     {
-        title: "Penyusunan AMDAL Kawasan Industri Subang",
-        slug: "amdal-subang-smartpolitan",
-        client: "PT Suryacipta Swadaya",
-        year: 2023,
-        category: "AMDAL",
-        location: "Subang, Jawa Barat",
-        description: "Penyusunan dokumen AMDAL untuk pengembangan kawasan industri terintegrasi seluas 2.700 Ha.",
-        imageUrl: "/images/sbm-profile-page-0003.webp",
-        challenge: "Kawasan mencakup area sensitif hidrologi dan pemukiman padat.",
-        solution: "Penerapan konsep Eco-Industrial Park dengan sistem pengelolaan air terpadu.",
-        result: "Izin Lingkungan terbit tepat waktu tanpa penolakan warga.",
-        expertId: expertBudi.id
+      title: "Penyusunan AMDAL Kawasan Industri Subang",
+      slug: "amdal-subang-smartpolitan",
+      client: "PT Suryacipta Swadaya",
+      year: 2023,
+      category: "AMDAL",
+      location: "Subang, Jawa Barat",
+      description: "Penyusunan dokumen AMDAL untuk pengembangan kawasan industri terintegrasi seluas 2.700 Ha.",
+      imageUrl: "/images/sbm-profile-page-0003.webp",
+      challenge: "Kawasan mencakup area sensitif hidrologi dan pemukiman padat.",
+      solution: "Penerapan konsep Eco-Industrial Park dengan sistem pengelolaan air terpadu.",
+      result: "Izin Lingkungan terbit tepat waktu tanpa penolakan warga.",
+      expertId: expertBudi.id
     },
     {
-        title: "Perencanaan IPAL Industri Tekstil",
-        slug: "ipal-tekstil-majalaya",
-        client: "PT Tekstil Sejahtera",
-        year: 2022,
-        category: "IPAL/WWTP",
-        location: "Majalaya, Jawa Barat",
-        description: "Desain dan konstruksi IPAL kapasitas 1000 m3/hari dengan teknologi Biologi-Kimia.",
-        imageUrl: "/images/sbm-profile-page-0026.webp",
-        challenge: "Lahan terbatas dan karakteristik limbah dengan COD tinggi.",
-        solution: "Penggunaan reaktor anaerobik vertikal untuk menghemat lahan.",
-        result: "Effluent memenuhi baku mutu dan daur ulang air mencapai 40%.",
-        expertId: expertSiti.id
+      title: "Perencanaan IPAL Industri Tekstil",
+      slug: "ipal-tekstil-majalaya",
+      client: "PT Tekstil Sejahtera",
+      year: 2022,
+      category: "IPAL/WWTP",
+      location: "Majalaya, Jawa Barat",
+      description: "Desain dan konstruksi IPAL kapasitas 1000 m3/hari dengan teknologi Biologi-Kimia.",
+      imageUrl: "/images/sbm-profile-page-0026.webp",
+      challenge: "Lahan terbatas dan karakteristik limbah dengan COD tinggi.",
+      solution: "Penggunaan reaktor anaerobik vertikal untuk menghemat lahan.",
+      result: "Effluent memenuhi baku mutu dan daur ulang air mencapai 40%.",
+      expertId: expertSiti.id
     },
     {
-        title: "Andalalin Apartemen Grand Asia Afrika",
-        slug: "andalalin-grand-asia-afrika",
-        client: "PT Kagum Group",
-        year: 2021,
-        category: "Andalalin",
-        location: "Bandung, Jawa Barat",
-        description: "Kajian dampak lalu lintas untuk pembangunan apartemen 4 tower di pusat kota Bandung.",
-        imageUrl: "/images/sbm-profile-page-0001.webp",
-        challenge: "Lokasi di persimpangan padat dengan V/C ratio eksisting > 0.8.",
-        solution: "Rekayasa geometrik simpang dan manajemen akses masuk-keluar.",
-        result: "Persetujuan Andalalin terbit dan kemacetan lokal terurai.",
-        expertId: expertHendra.id
+      title: "Andalalin Apartemen Grand Asia Afrika",
+      slug: "andalalin-grand-asia-afrika",
+      client: "PT Kagum Group",
+      year: 2021,
+      category: "Andalalin",
+      location: "Bandung, Jawa Barat",
+      description: "Kajian dampak lalu lintas untuk pembangunan apartemen 4 tower di pusat kota Bandung.",
+      imageUrl: "/images/sbm-profile-page-0001.webp",
+      challenge: "Lokasi di persimpangan padat dengan V/C ratio eksisting > 0.8.",
+      solution: "Rekayasa geometrik simpang dan manajemen akses masuk-keluar.",
+      result: "Persetujuan Andalalin terbit dan kemacetan lokal terurai.",
+      expertId: expertHendra.id
     }
   ]
 
   for (const p of portfolioItems) {
-      const item = await prisma.portfolioItem.upsert({
-          where: { slug: p.slug },
-          update: p,
-          create: p
-      })
-      console.log(`Created/Updated portfolio: ${item.title}`)
+    const item = await prisma.portfolioItem.upsert({
+      where: { slug: p.slug },
+      update: p,
+      create: p
+    })
+    console.log(`Created/Updated portfolio: ${item.title}`)
   }
 
   // Glossary terms logic...
@@ -256,7 +256,7 @@ async function main() {
   for (const g of glossaryTerms) {
     const { relatedServices, ...termData } = g
     const servicesToConnect = await prisma.service.findMany({
-        where: { slug: { in: relatedServices } }
+      where: { slug: { in: relatedServices } }
     })
 
     const term = await prisma.glossaryTerm.upsert({

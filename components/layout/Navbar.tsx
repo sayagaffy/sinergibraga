@@ -1,12 +1,12 @@
 'use client'
 
-import * as React from "react"
+import { Button } from "@/components/ui/Button"
+import { cn } from "@/lib/utils"
+import { AnimatePresence, motion } from "framer-motion"
+import { ArrowRight, Menu, X } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, ArrowRight } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/Button"
+import * as React from "react"
 
 const navItems = [
   { name: "Beranda", href: "/" },
@@ -41,40 +41,44 @@ export function Navbar() {
 
   // Determine styles based on scroll and route
   const isTransparent = isHomePage && !scrolled
-  const textColor = isTransparent ? "text-white" : "text-slate-900 dark:text-white"
-  const subTextColor = isTransparent ? "text-slate-300" : "text-slate-500 dark:text-slate-400"
-  const buttonVariant = isTransparent ? "bg-white text-sbm-blue hover:bg-white/90" : "bg-sbm-blue text-white shadow-lg shadow-sbm-blue/20"
+
+  // FIXED: Hero is now White/Light, so we need DARK text even when transparent.
+  const textColor = "text-slate-900"
+  const subTextColor = "text-slate-500"
+
+  // Button should always be consistent (Solid Blue) for call-to-action visibility
+  const buttonVariant = "bg-sbm-blue text-white shadow-lg shadow-sbm-blue/20 hover:bg-blue-700"
 
   // Specific style for non-home pages (always have background unless scrolled logic overrides)
-  const headerBackground = isHomePage
-    ? (scrolled ? "bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border-slate-200 dark:border-slate-800 shadow-sm" : "bg-transparent border-transparent")
-    : "bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm"
+  const headerBackground = scrolled
+    ? "bg-white/80 backdrop-blur-xl border-b border-white/20 shadow-sm"
+    : "bg-transparent border-transparent"
 
   return (
     <header
       className={cn(
-        "fixed top-0 w-full z-50 transition-all duration-300",
+        "fixed top-0 w-full z-50 transition-all duration-500 will-change-transform",
         headerBackground,
-        isHomePage && !scrolled ? "py-5" : "py-3"
+        isHomePage && !scrolled ? "py-6" : "py-4"
       )}
     >
-      <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="w-10 h-10 bg-gradient-to-br from-sbm-blue to-sbm-teal rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-sbm-blue/20 group-hover:scale-105 transition-transform">
+      <div className="container mx-auto px-6 md:px-8 flex items-center justify-between">
+        <Link href="/" className="flex items-center gap-3 group">
+          <div className="w-12 h-12 bg-gradient-to-br from-sbm-blue to-blue-600 rounded-2xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-sbm-blue/20 group-hover:scale-105 transition-transform duration-300">
             S
           </div>
           <div className="flex flex-col">
-            <span className={cn("font-bold text-lg leading-tight transition-colors", textColor)}>
+            <span className={cn("font-bold text-xl leading-none tracking-tight transition-colors", textColor)}>
               Sinergi Braga Mandiri
             </span>
-            <span className={cn("text-[10px] tracking-wider transition-colors", subTextColor)}>
-              ENVIRONMENTAL CONSULTANT
+            <span className={cn("text-[11px] font-medium tracking-[0.2em] uppercase transition-colors mt-1", subTextColor)}>
+              Environmental Consultant
             </span>
           </div>
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-10">
           {navItems.map((item) => {
             const isActive = pathname === item.href
             return (
@@ -82,10 +86,10 @@ export function Navbar() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "text-sm font-medium transition-colors relative py-1",
+                  "text-sm font-medium transition-all duration-300 relative py-1",
                   isActive
-                    ? "text-sbm-blue font-semibold"
-                    : (isTransparent ? "text-slate-200 hover:text-white" : "text-slate-600 dark:text-slate-300 hover:text-sbm-blue")
+                    ? "text-sbm-blue font-semibold scale-105"
+                    : "text-slate-600 hover:text-sbm-blue hover:scale-105"
                 )}
               >
                 {item.name}
@@ -93,13 +97,14 @@ export function Navbar() {
                   <motion.div
                     layoutId="navbar-indicator"
                     className="absolute -bottom-1 left-0 right-0 h-0.5 bg-sbm-blue rounded-full"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
                 )}
               </Link>
             )
           })}
           <Link href="/contact">
-            <Button size="sm" className={cn("gap-2 transition-all", buttonVariant)}>
+            <Button size="md" className={cn("gap-2 transition-all rounded-full px-6", buttonVariant)}>
               Hubungi Kami <ArrowRight className="w-4 h-4" />
             </Button>
           </Link>
@@ -110,7 +115,7 @@ export function Navbar() {
           className={cn("md:hidden p-2 transition-colors", textColor)}
           onClick={() => setIsOpen(!isOpen)}
         >
-          {isOpen ? <X /> : <Menu />}
+          {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
 
@@ -121,30 +126,31 @@ export function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 overflow-hidden absolute top-full left-0 right-0 shadow-xl"
+            className="md:hidden bg-white border-b border-slate-100 overflow-hidden absolute top-full left-0 right-0 shadow-xl"
           >
-            <nav className="flex flex-col p-4 gap-2">
+            <nav className="flex flex-col p-6 gap-3">
               {navItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "text-base font-medium p-3 rounded-xl transition-colors flex justify-between items-center",
+                    "text-lg font-medium p-4 rounded-2xl transition-all flex justify-between items-center",
                     pathname === item.href
-                      ? "bg-sbm-blue/10 text-sbm-blue"
-                      : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900"
+                      ? "bg-slate-50 text-sbm-blue translate-x-2"
+                      : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
                   )}
+                  onClick={() => setIsOpen(false)}
                 >
                   {item.name}
-                  {pathname === item.href && <div className="w-1.5 h-1.5 rounded-full bg-sbm-blue" />}
+                  {pathname === item.href && <div className="w-2 h-2 rounded-full bg-sbm-blue" />}
                 </Link>
               ))}
-              <div className="pt-4 mt-2 border-t border-slate-100 dark:border-slate-900">
-                <Link href="/contact">
-                   <Button className="w-full justify-between group">
-                     Hubungi Kami
-                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                   </Button>
+              <div className="pt-6 mt-4 border-t border-slate-100">
+                <Link href="/contact" onClick={() => setIsOpen(false)}>
+                  <Button className="w-full justify-between group rounded-xl py-6 text-lg">
+                    Hubungi Kami
+                    <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                  </Button>
                 </Link>
               </div>
             </nav>

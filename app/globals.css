@@ -3,27 +3,38 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --foreground-rgb: 15, 23, 42;
+  /* slate-950 */
+  --background-rgb: 255, 255, 255;
+  --sbm-blue: 0, 86, 179;
+  /* #0056b3 */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+@layer base {
+  html {
+    scroll-behavior: smooth;
   }
-}
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  body {
+    @apply bg-slate-50 text-slate-600;
+    color: rgb(var(--foreground-rgb));
+    /* Start with variable but override with Tailwind classes usually */
+    background: white;
+    /* Fallback */
+    font-feature-settings: "rlig" 1, "calt" 1, "cv11" 1, "ss01" 1;
+    /* Force enable */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply text-slate-900 tracking-tight text-balance;
+  }
 }
 
 @layer utilities {
@@ -32,10 +43,15 @@ body {
   }
 
   .glass-panel {
-    @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-xl;
+    @apply bg-white/70 backdrop-blur-lg border border-slate-200/50 shadow-sm;
   }
 
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-sbm-blue to-sbm-teal;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-cyan-600;
+  }
+
+  .bg-dots-pattern {
+    background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+    background-size: 24px 24px;
   }
 }

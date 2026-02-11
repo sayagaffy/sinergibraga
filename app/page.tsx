@@ -1,15 +1,15 @@
+import { Hero } from "@/components/home/Hero"
+import { ServiceCard } from "@/components/home/ServiceCard"
+import { TrustBar } from "@/components/home/TrustBar"
+import { Button } from "@/components/ui/Button"
+import { ArrowRight, Car, Droplets, FileText, Waves } from "lucide-react"
 import { Metadata } from "next"
 import dynamic from "next/dynamic"
-import { HeroSection } from "@/components/home/HeroSection"
-import { TrustBar } from "@/components/home/TrustBar"
-import { ServiceCard } from "@/components/home/ServiceCard"
-import { Button } from "@/components/ui/Button"
 import Link from "next/link"
-import { ArrowRight, Car, Droplets, FileText, Waves } from "lucide-react"
 
 // Dynamically import GeoFactSheet for bundle optimization while keeping SSR for SEO
 const GeoFactSheet = dynamic(() => import("@/components/geo/GeoFactSheet"), {
-  loading: () => <div className="h-64 bg-slate-100 dark:bg-slate-800 animate-pulse rounded-xl" />,
+  loading: () => <div className="h-64 bg-slate-50 animate-pulse rounded-xl" />,
   ssr: true
 })
 
@@ -96,19 +96,19 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-slate-50">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <HeroSection />
+      <Hero />
 
       {/* Services Section */}
       <section className="py-24 bg-slate-50 dark:bg-slate-900 relative overflow-hidden">
-         {/* Decorative background elements */}
-         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 dark:via-slate-800 to-transparent" />
-         <div className="absolute -left-[10%] top-[20%] w-[40%] h-[40%] bg-sbm-blue/5 rounded-full blur-3xl" />
+        {/* Decorative background elements */}
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 dark:via-slate-800 to-transparent" />
+        <div className="absolute -left-[10%] top-[20%] w-[40%] h-[40%] bg-sbm-blue/5 rounded-full blur-3xl" />
 
         <div className="container px-4 md:px-6 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
@@ -141,29 +141,28 @@ export default function Home() {
 
       <TrustBar />
 
-      {/* CTA Section */}
-      <section className="py-24 bg-sbm-blue relative overflow-hidden isolate">
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay" />
-        <div className="absolute inset-0 bg-gradient-to-br from-sbm-blue to-sbm-teal mix-blend-multiply" />
+      {/* CTA Section - Refactored to Light Theme (80/20 Rule) */}
+      <section className="py-24 bg-white relative overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-sbm-blue/5 rounded-full blur-3xl -z-10" />
 
         <div className="container px-4 md:px-6 relative z-10 text-center space-y-8">
-          <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight leading-tight">
+          <h2 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-tight leading-tight">
             Siap untuk Langkah Selanjutnya?
           </h2>
-          <p className="text-blue-50/90 text-lg max-w-2xl mx-auto font-light">
+          <p className="text-slate-600 text-lg max-w-2xl mx-auto font-light">
             Hubungi tim ahli kami untuk konsultasi gratis mengenai kebutuhan dokumen lingkungan dan perizinan proyek Anda.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-             <Link href="/contact">
-                <Button size="lg" className="bg-white text-sbm-blue hover:bg-white/90 shadow-xl border-none font-semibold px-8">
-                  Mulai Konsultasi
-                </Button>
-             </Link>
-             <Link href="https://wa.me/6281112149222" target="_blank">
-                <Button size="lg" variant="outline" className="text-white border-white/30 hover:bg-white/10 hover:border-white backdrop-blur-sm px-8">
-                  Chat WhatsApp
-                </Button>
-             </Link>
+            <Link href="/contact">
+              <Button size="lg" className="bg-sbm-blue text-white hover:bg-blue-700 shadow-xl shadow-sbm-blue/20 border-none font-semibold px-8 h-12">
+                Mulai Konsultasi
+              </Button>
+            </Link>
+            <Link href="https://wa.me/6281112149222" target="_blank">
+              <Button size="lg" variant="outline" className="text-slate-700 border-slate-200 hover:bg-slate-50 hover:text-slate-900 px-8 h-12">
+                Chat WhatsApp
+              </Button>
+            </Link>
           </div>
         </div>
       </section>

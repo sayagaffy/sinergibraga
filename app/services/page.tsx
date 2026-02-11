@@ -1,10 +1,10 @@
+import { ArrowRight, CheckCircle2 } from "lucide-react"
 import { Metadata } from "next"
 import Link from "next/link"
-import { ArrowRight, CheckCircle2 } from "lucide-react"
 
-import prisma from "@/lib/prisma"
-import { Section } from "@/components/ui/Section"
 import { Card } from "@/components/ui/Card"
+import { Section } from "@/components/ui/Section"
+import prisma from "@/lib/prisma"
 
 export const metadata: Metadata = {
   title: "Layanan Kami",
@@ -17,12 +17,16 @@ export default async function ServicesPage() {
   })
 
   return (
-    <div className="pt-10">
-      <section className="bg-sbm-blue py-20 text-white">
+    <div className="pt-24 pb-20">
+      <section className="bg-slate-50 py-12 border-b border-slate-200">
         <div className="container px-4 md:px-6 text-center">
-          <h1 className="text-4xl font-bold mb-6">Layanan Kami</h1>
-          <p className="text-xl text-blue-100 max-w-3xl mx-auto">
-            Solusi terintegrasi untuk kebutuhan lingkungan dan perizinan bisnis Anda.
+          <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full bg-blue-100 text-sbm-blue text-sm font-medium">
+            <span className="w-2 h-2 rounded-full bg-sbm-blue"></span>
+            <span>Layanan Profesional</span>
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900 tracking-tight">Layanan Kami</h1>
+          <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+            Solusi terintegrasi untuk kebutuhan lingkungan dan perizinan bisnis Anda dengan standar mutu tinggi.
           </p>
         </div>
       </section>
@@ -45,12 +49,12 @@ export default async function ServicesPage() {
                 </div>
 
                 <div className="border-t border-slate-100 pt-4 flex items-center justify-between mt-auto">
-                   <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-                     Lihat Detail
-                   </span>
-                   <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-sbm-blue group-hover:bg-sbm-blue group-hover:text-white transition-all duration-300">
-                     <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                   </div>
+                  <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                    Lihat Detail
+                  </span>
+                  <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-sbm-blue group-hover:bg-sbm-blue group-hover:text-white transition-all duration-300">
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                  </div>
                 </div>
               </Card>
             </Link>
