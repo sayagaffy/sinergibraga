@@ -4,18 +4,33 @@ import Image from "next/image"
 import Link from "next/link"
 
 import { Card } from "@/components/ui/Card"
-import { Section } from "@/components/ui/Section"
-import prisma from "@/lib/prisma"
+import { getPortfoliosQuery } from "@/lib/queries"
+import { client } from "@/lib/sanity"
 
 export const metadata: Metadata = {
   title: "Portofolio & Studi Kasus",
   description: "Lihat pengalaman proyek PT Sinergi Braga Mandiri (SBM) dalam penyusunan AMDAL, Andalalin, dan konstruksi IPAL di seluruh Indonesia.",
 }
 
+// Type for Portfolio Item (subset for listing)
+type PortfolioItem = {
+  _id: string
+  title: string
+  slug: string
+  description: string
+  imageUrl: string | null
+  category: string
+  year: number
+  location: string | null
+}
+
 export default async function PortfolioPage() {
-  const items = await prisma.portfolioItem.findMany({
-    orderBy: { year: 'desc' }
-  })
+  const items: PortfolioItem[] = await client.fetch(getPortfoliosQuery)
+
+  // Sort locally since GROQ sort might be missed in query or just to be safe
+  // actually better to sort in GROQ: | order(year desc)
+  // But let's sort here for now to match behavior
+  const sortedItems = items.sort((a, b) => b.year - a.year)
 
   return (
     <div className="pt-24 pb-20 bg-slate-50 min-h-screen">
@@ -34,8 +49,8 @@ export default async function PortfolioPage() {
 
       <div className="container px-4 md:px-6 py-16">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {items.map((item) => (
-            <Link key={item.id} href={`/portfolio/${item.slug}`} className="h-full block">
+          {sortedItems.map((item) => (
+            <Link key={item._id} href={`/portfolio/${item.slug}`} className="h-full block">
               <Card hoverEffect className="h-full p-0 overflow-hidden flex flex-col group cursor-pointer border border-slate-200 shadow-sm hover:shadow-xl bg-white transition-all duration-300">
                 {/* Image Container */}
                 <div className="relative h-56 w-full bg-slate-200 overflow-hidden">
@@ -90,3 +105,4 @@ export default async function PortfolioPage() {
     </div>
   )
 }
+

@@ -1,24 +1,23 @@
+import { getSitemapDataQuery } from '@/lib/queries'
+import { client } from '@/lib/sanity'
 import { MetadataRoute } from 'next'
-import prisma from '@/lib/prisma'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://sinergibragamandiri.com'
 
   // Fetch dynamic routes
-  // Use try-catch or ensure prisma is ready. In build time it should be fine.
-  const services = await prisma.service.findMany()
-  const portfolioItems = await prisma.portfolioItem.findMany()
+  const { services, portfolios } = await client.fetch(getSitemapDataQuery)
 
-  const serviceRoutes = services.map((service) => ({
+  const serviceRoutes = services.map((service: any) => ({
     url: `${baseUrl}/services/${service.slug}`,
-    lastModified: service.updatedAt,
+    lastModified: new Date(service._updatedAt),
     changeFrequency: 'weekly' as const,
     priority: 1.0,
   }))
 
-  const portfolioRoutes = portfolioItems.map((item) => ({
+  const portfolioRoutes = portfolios.map((item: any) => ({
     url: `${baseUrl}/portfolio/${item.slug}`,
-    lastModified: item.updatedAt,
+    lastModified: new Date(item._updatedAt),
     changeFrequency: 'monthly' as const,
     priority: 0.8,
   }))

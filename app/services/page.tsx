@@ -3,18 +3,24 @@ import { Metadata } from "next"
 import Link from "next/link"
 
 import { Card } from "@/components/ui/Card"
-import { Section } from "@/components/ui/Section"
-import prisma from "@/lib/prisma"
+import { getServicesQuery } from "@/lib/queries"
+import { client } from "@/lib/sanity"
 
 export const metadata: Metadata = {
   title: "Layanan Kami",
   description: "Daftar lengkap layanan PT Sinergi Braga Mandiri: AMDAL, UKL-UPL, IPAL, WTP, Andalalin, SLF, dan lainnya.",
 }
 
+type ServiceItem = {
+  _id: string
+  title: string
+  slug: string
+  description: string
+  icon?: string
+}
+
 export default async function ServicesPage() {
-  const services = await prisma.service.findMany({
-    orderBy: { createdAt: 'asc' }
-  })
+  const services: ServiceItem[] = await client.fetch(getServicesQuery)
 
   return (
     <div className="pt-24 pb-20">
@@ -34,7 +40,7 @@ export default async function ServicesPage() {
       <div className="container px-4 md:px-6 py-16">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service) => (
-            <Link key={service.id} href={`/services/${service.slug}`} className="h-full block">
+            <Link key={service._id} href={`/services/${service.slug}`} className="h-full block">
               <Card hoverEffect className="h-full flex flex-col justify-between group cursor-pointer border-t-4 border-t-slate-200 hover:border-t-sbm-blue transition-all duration-300">
                 <div>
                   <div className="mb-6 p-3 w-fit rounded-lg bg-slate-50 text-sbm-blue group-hover:bg-sbm-blue group-hover:text-white transition-colors duration-300 shadow-sm">

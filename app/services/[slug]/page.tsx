@@ -7,16 +7,47 @@ import { SchemaOrg } from "@/components/seo/SchemaOrg"
 import { Button } from "@/components/ui/Button"
 import { Card } from "@/components/ui/Card"
 import { Section } from "@/components/ui/Section"
-import prisma from "@/lib/prisma"
+import { getServiceBySlugQuery } from "@/lib/queries"
+import { client } from "@/lib/sanity"
 import { ArrowLeft, CheckCircle2 } from "lucide-react"
 import { Metadata } from 'next'
 import Link from "next/link"
 import { notFound } from 'next/navigation'
 
+type ServiceWithRelations = {
+  _id: string;
+  title: string;
+  slug: string;
+  description: string;
+  features?: string[];
+  geoFacts?: string;
+  icon?: string;
+  statistics?: Array<{ label: string, value: string }>;
+  expert?: {
+    name: string;
+    role: string;
+    expertQuote: string;
+    photoUrl?: string | null;
+    linkedinUrl?: string | null;
+    credentials?: string | null;
+  };
+  citations?: Array<{
+    sourceTitle: string;
+    sourceUrl?: string | null;
+    contextClause?: string | null;
+  }>;
+  faqs?: Array<{
+    question: string;
+    answer: string;
+  }>;
+  glossaryTerms?: Array<{
+    term: string;
+    definition: string;
+  }>;
+}
+
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const service = await prisma.service.findUnique({
-    where: { slug: params.slug },
-  })
+  const service = await client.fetch(getServiceBySlugQuery, { slug: params.slug })
 
   if (!service) {
     return {
@@ -31,48 +62,29 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 export default async function ServicePage({ params }: { params: { slug: string } }) {
-  const serviceRaw = await prisma.service.findUnique({
-    where: { slug: params.slug },
-    include: {
-      expert: true,
-      citations: true,
-      faqs: true,
-      glossaryTerms: true,
-    },
-  })
+  const serviceRaw: ServiceWithRelations = await client.fetch(getServiceBySlugQuery, { slug: params.slug })
 
   if (!serviceRaw) {
     notFound()
   }
 
-  // Parse JSON fields (adapt for Postgres schema where features/statistics are Json)
-  let features: string[] = []
-  try {
-    if (typeof serviceRaw.features === 'string') {
-      features = JSON.parse(serviceRaw.features)
-    } else {
-      features = serviceRaw.features as string[] || []
-    }
-  } catch (e) {
-    console.error("Failed to parse features", e)
-  }
+  // Sanity returns features as string[] directly if defined
+  const features = serviceRaw.features || []
 
-  let statistics: Record<string, string | number> | null = null
-  try {
-    if (typeof serviceRaw.statistics === 'string') {
-      statistics = JSON.parse(serviceRaw.statistics)
-    } else {
-      statistics = serviceRaw.statistics as Record<string, string | number> | null
-    }
-  } catch (e) {
-    console.error("Failed to parse statistics", e)
-  }
+  // Transform statistics array of objects to Record<string, string | number> for GeoFactSheet
+  const statisticsRecord: Record<string, string | number> | null =
+    serviceRaw.statistics && serviceRaw.statistics.length > 0
+      ? serviceRaw.statistics.reduce((acc, curr) => {
+        acc[curr.label] = curr.value;
+        return acc;
+      }, {} as Record<string, string | number>)
+      : null;
 
   // Prepare data for SchemaOrg
   const schemaData = {
     ...serviceRaw,
     features,
-    statistics
+    statistics: statisticsRecord
   }
 
   return (
@@ -100,21 +112,23 @@ export default async function ServicePage({ params }: { params: { slug: string }
             {/* GEO Fact Sheet */}
             <div id="fact-sheet">
               <GeoFactSheet
-                statistics={statistics}
+                statistics={statisticsRecord}
                 citations={serviceRaw.citations}
                 expertQuote={serviceRaw.expert?.expertQuote}
               />
             </div>
 
             {/* Technical Description */}
-            <Section id="technical-desc" className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
-              <h2 className="text-2xl font-bold mb-4 text-slate-900">Deskripsi Teknis</h2>
-              <div className="prose prose-lg prose-slate max-w-none">
-                <p className="text-slate-700 leading-relaxed">
-                  {serviceRaw.geoFacts}
-                </p>
-              </div>
-            </Section>
+            {serviceRaw.geoFacts && (
+              <Section id="technical-desc" className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
+                <h2 className="text-2xl font-bold mb-4 text-slate-900">Deskripsi Teknis</h2>
+                <div className="prose prose-lg prose-slate max-w-none">
+                  <p className="text-slate-700 leading-relaxed">
+                    {serviceRaw.geoFacts}
+                  </p>
+                </div>
+              </Section>
+            )}
 
             {/* Tech Specs / Features */}
             {features && features.length > 0 && (

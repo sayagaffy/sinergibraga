@@ -3,8 +3,8 @@ import { GeoFactSheet } from "@/components/geo/GeoFactSheet"
 import { SchemaOrg } from "@/components/seo/SchemaOrg"
 import { Button } from "@/components/ui/Button"
 import { Card } from "@/components/ui/Card"
-import prisma from "@/lib/prisma"
-import { Citation, Expert } from "@prisma/client"
+import { getPortfolioBySlugQuery } from "@/lib/queries"
+import { client } from "@/lib/sanity"
 import { ArrowLeft, ArrowUpRight, BarChart3, Building2, Calendar, CheckCircle2, Image as ImageIcon, Lightbulb, MapPin, Tag, Target, Trophy } from "lucide-react"
 import { Metadata } from 'next'
 import Image from "next/image"
@@ -12,7 +12,7 @@ import Link from "next/link"
 import { notFound } from 'next/navigation'
 
 type PortfolioWithRelations = {
-  id: string;
+  _id: string;
   title: string;
   slug: string;
   client: string | null;
@@ -24,14 +24,23 @@ type PortfolioWithRelations = {
   challenge: string | null;
   solution: string | null;
   result: string | null;
-  expert: Expert | null;
-  citations: Citation[];
+  expert: {
+    name: string;
+    role: string;
+    expertQuote: string;
+    photoUrl?: string | null;
+    linkedinUrl?: string | null;
+    credentials?: string | null;
+  } | null;
+  citations: Array<{
+    sourceTitle: string;
+    sourceUrl?: string | null;
+    contextClause?: string | null;
+  }> | null;
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const item = await prisma.portfolioItem.findUnique({
-    where: { slug: params.slug },
-  })
+  const item = await client.fetch(getPortfolioBySlugQuery, { slug: params.slug })
 
   if (!item) {
     return {
@@ -46,19 +55,11 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 export default async function PortfolioPage({ params }: { params: { slug: string } }) {
-  const itemRaw = await prisma.portfolioItem.findUnique({
-    where: { slug: params.slug },
-    include: {
-      expert: true,
-      citations: true,
-    },
-  })
+  const item: PortfolioWithRelations = await client.fetch(getPortfolioBySlugQuery, { slug: params.slug })
 
-  if (!itemRaw) {
+  if (!item) {
     notFound()
   }
-
-  const item = itemRaw as unknown as PortfolioWithRelations;
 
   return (
     <div className="min-h-screen bg-slate-50 pb-24">
@@ -268,3 +269,4 @@ export default async function PortfolioPage({ params }: { params: { slug: string
     </div>
   )
 }
+
