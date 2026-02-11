@@ -64,13 +64,13 @@ export function Navbar() {
     >
       <div className="container mx-auto px-6 md:px-8 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-12 h-12 bg-gradient-to-br from-sbm-blue to-blue-600 rounded-2xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-sbm-blue/20 group-hover:scale-105 transition-transform duration-300">
-            S
+          <div className="w-12 h-12 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+            <img src="/images/logosvg-sbm.svg" alt="SBM Logo" className="w-full h-full object-contain" />
           </div>
           <div className="flex flex-col">
-            <span className={cn("font-bold text-xl leading-none tracking-tight transition-colors", textColor)}>
+            {/* <span className={cn("font-bold text-xl leading-none tracking-tight transition-colors", textColor)}>
               Sinergi Braga Mandiri
-            </span>
+            </span> */}
             <span className={cn("text-[11px] font-medium tracking-[0.2em] uppercase transition-colors mt-1", subTextColor)}>
               Environmental Consultant
             </span>

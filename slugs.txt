@@ -1,0 +1,38 @@
+[
+  {
+    "slug": "andalalin",
+    "title": "Andalalin"
+  },
+  {
+    "slug": "bidang-instalasi-pengolahan-air-water-treatment-plant",
+    "title": "Bidang Instalasi Pengolahan Air (Water Treatment Plant)"
+  },
+  {
+    "slug": "bidang-instalasi-pengolahan-air-limbah-ipal-wwtp",
+    "title": "Bidang Instalasi Pengolahan Air Limbah (IPAL/WWTP)"
+  },
+  {
+    "slug": "bidang-sipil",
+    "title": "Bidang Sipil"
+  },
+  {
+    "slug": "geolistrik",
+    "title": "Geolistrik"
+  },
+  {
+    "slug": "sipa",
+    "title": "SIPA"
+  },
+  {
+    "slug": "sertifikat-laik-fungsi",
+    "title": "Sertifikat Laik Fungsi"
+  },
+  {
+    "slug": "studi-atau-dokumen-lingkungan",
+    "title": "Studi atau Dokumen Lingkungan"
+  },
+  {
+    "slug": "topografi",
+    "title": "Topografi"
+  }
+]

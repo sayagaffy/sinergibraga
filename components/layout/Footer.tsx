@@ -9,8 +9,8 @@ export function Footer() {
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-sbm-blue rounded flex items-center justify-center text-white font-bold">
-                S
+              <div className="w-8 h-8 flex items-center justify-center">
+                <img src="/images/logosvg-sbm.svg" alt="SBM Logo" className="w-full h-full object-contain" />
               </div>
               <span className="text-slate-900 font-bold text-lg">Sinergi Braga Mandiri</span>
             </div>
@@ -46,11 +46,11 @@ export function Footer() {
           <div>
             <h3 className="text-slate-900 font-semibold mb-4">Layanan Utama</h3>
             <ul className="space-y-2 text-sm">
-              <li><Link href="/services#studi-lingkungan" className="hover:text-sbm-blue transition-colors">AMDAL & UKL-UPL</Link></li>
-              <li><Link href="/services#ipal-wwtp" className="hover:text-sbm-blue transition-colors">IPAL / WWTP</Link></li>
-              <li><Link href="/services#andalalin" className="hover:text-sbm-blue transition-colors">Andalalin</Link></li>
-              <li><Link href="/services#slf" className="hover:text-sbm-blue transition-colors">Sertifikat Laik Fungsi</Link></li>
-              <li><Link href="/services#sipa" className="hover:text-sbm-blue transition-colors">Perizinan SIPA</Link></li>
+              <li><Link href="/services/studi-atau-dokumen-lingkungan" className="hover:text-sbm-blue transition-colors">AMDAL & UKL-UPL</Link></li>
+              <li><Link href="/services/bidang-instalasi-pengolahan-air-limbah-ipal-wwtp" className="hover:text-sbm-blue transition-colors">IPAL / WWTP</Link></li>
+              <li><Link href="/services/andalalin" className="hover:text-sbm-blue transition-colors">Andalalin</Link></li>
+              <li><Link href="/services/sertifikat-laik-fungsi" className="hover:text-sbm-blue transition-colors">Sertifikat Laik Fungsi</Link></li>
+              <li><Link href="/services/sipa" className="hover:text-sbm-blue transition-colors">Perizinan SIPA</Link></li>
             </ul>
           </div>
 

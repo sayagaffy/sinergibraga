@@ -1,0 +1,137 @@
+[
+    {
+        "type": "service",
+        "data": [
+            {
+                "title": "Studi atau Dokumen Lingkungan",
+                "description": "Penyusunan UKL UPL, Penyusunan Laporan Pelaksanaan AMDAL/UKL UPL, Penyusunan DPLH (Dokumen Pengelolaan Lingkungan Hidup), Kajian IPLC (Izin Pembuangan Limbah Cair), Kajian Bahan Berbahaya dan Beracun (B3) Rekomend. Pelaporan/Penyusunan SIMPEL, Penyusunan PROPER.",
+                "icon": "FileText",
+                "imagePage": 9
+            },
+            {
+                "title": "Bidang Instalasi Pengolahan Air Limbah (IPAL/WWTP)",
+                "description": "Desain Instalasi Pengolahan Air Limbah (IPAL), Optimalisasi Kinerja IPAL, Layanan Konsultasi dan Monitoring IPAL.",
+                "icon": "Droplets",
+                "imagePage": 9
+            },
+            {
+                "title": "Bidang Instalasi Pengolahan Air (Water Treatment Plant)",
+                "description": "Desain Bangunan Pengolahan Air Bersih.",
+                "icon": "Waves",
+                "imagePage": 9
+            },
+            {
+                "title": "Bidang Sipil",
+                "description": "Struktur Bangunan Air Bersih, Struktur Bangunan Air, Limbah Konstruksi TPS B3.",
+                "icon": "HardHat",
+                "imagePage": 10
+            },
+            {
+                "title": "Andalalin",
+                "description": "Kajian untuk mengetahui dampak pembangunan atau kegiatan tertentu terhadap lalu lintas di sekitarnya. Memastikan bahwa pengembangan proyek, pembangunan gedung, kawasan perumahan, atau pusat perbelanjaan, tidak menyebabkan gangguan signifikan pada lalu lintas.",
+                "icon": "TrafficCone",
+                "imagePage": 10
+            },
+            {
+                "title": "Sertifikat Laik Fungsi",
+                "description": "Sertifikasi yang menyatakan bahwa suatu bangunan telah memenuhi persyaratan kelaikan fungsi bangunan, baik dari segi keselamatan, kesehatan, kenyamanan, maupun kemudahan akses.",
+                "icon": "Award",
+                "imagePage": 10
+            },
+            {
+                "title": "Topografi",
+                "description": "Layanan pemetaan dan pengukuran tanah.",
+                "icon": "Map",
+                "imagePage": 8
+            },
+            {
+                "title": "Geolistrik",
+                "description": "Layanan survei geolistrik air tanah.",
+                "icon": "Zap",
+                "imagePage": 8
+            },
+            {
+                "title": "SIPA",
+                "description": "Surat Izin Pengusahaan Air Tanah.",
+                "icon": "Droplet",
+                "imagePage": 8
+            }
+        ]
+    },
+    {
+        "type": "portfolio",
+        "year": 2023,
+        "data": [
+            {
+                "client": "Gaia Hotel",
+                "title": "Dokumen B3 & Kajian Neraca Air",
+                "category": "Lingkungan"
+            },
+            {
+                "client": "Braga Citywalk",
+                "title": "Dokumen B3",
+                "category": "Lingkungan"
+            },
+            {
+                "client": "Ibis Group",
+                "title": "Dokumen UKL-UPL",
+                "category": "Lingkungan"
+            },
+            {
+                "client": "Istana Group",
+                "title": "Dokumen DELH - Apartemen Dago Beverly & Dago Suites",
+                "category": "Lingkungan"
+            },
+            {
+                "client": "Prodia Group",
+                "title": "Dokumen UKL-UPL",
+                "category": "Lingkungan"
+            },
+            {
+                "client": "RS Permata Kuningan",
+                "title": "Dokumen B3 & Pertek Air",
+                "category": "Kesehatan"
+            },
+            {
+                "client": "RSIA Humana Prima",
+                "title": "Dokumen B3 & Pertek Air",
+                "category": "Kesehatan"
+            },
+            {
+                "client": "RS Pasundan",
+                "title": "Dokumen B3, Pertek Air, UKL-UPL",
+                "category": "Kesehatan"
+            },
+            {
+                "client": "Astra Biz Centre",
+                "title": "Dokumen B3, Pertek Air, DELH",
+                "category": "Komersial"
+            },
+            {
+                "client": "Sinar Bandung",
+                "title": "Dokumen B3, Pertek Air, UKL-UPL",
+                "category": "Lingkungan"
+            },
+            {
+                "client": "Perum Jasa Tirta II Jatiluhur",
+                "title": "Kajian Pelaporan Air",
+                "category": "Infrastruktur"
+            },
+            {
+                "client": "PT. Caturindo Agung Jaya Rubber",
+                "title": "Dokumen DELH & Pertek Andalalin",
+                "category": "Industri"
+            },
+            {
+                "client": "PT. Perkasa Internusa Mandiri Alfaland",
+                "title": "Dokumen B3, Pertek Air, Andalalin & DELH",
+                "category": "Komersial"
+            },
+            {
+                "client": "Taman Kahati Kota Bandung",
+                "title": "DED Perencanaan Penataan Tata Ruang",
+                "category": "Tata Ruang"
+            }
+        ]
+    }
+]

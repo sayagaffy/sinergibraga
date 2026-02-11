@@ -23,14 +23,14 @@ const services = [
     title: "Studi Lingkungan",
     description: "Penyusunan dokumen lingkungan komprehensif sesuai regulasi terbaru.",
     details: "Meliputi AMDAL, UKL-UPL, SPPL, DELH, DPLH, dan Persetujuan Teknis lainnya.",
-    href: "/services/amdal-ukl-upl",
+    href: "/services/studi-atau-dokumen-lingkungan",
     icon: <FileText className="w-6 h-6" />,
   },
   {
     title: "IPAL / WWTP",
     description: "Desain, pembangunan, dan optimalisasi sistem pengolahan limbah.",
     details: "Solusi Water Treatment (WTP) dan Wastewater Treatment (WWTP) yang efisien dan ramah lingkungan.",
-    href: "/services/ipal-wwtp",
+    href: "/services/bidang-instalasi-pengolahan-air-limbah-ipal-wwtp",
     icon: <Droplets className="w-6 h-6" />,
   },
   {
@@ -129,7 +129,7 @@ export default function Home() {
           </div>
 
           <div className="mt-16 text-center">
-            <Link href="/services/amdal-ukl-upl">
+            <Link href="/services">
               <Button variant="outline" size="lg" className="group">
                 Lihat Semua Layanan
                 <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
