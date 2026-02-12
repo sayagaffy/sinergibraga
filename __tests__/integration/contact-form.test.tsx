@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import ContactPage from '../../app/contact/page'
 
@@ -19,10 +19,22 @@ jest.mock('../../components/ui/Card', () => ({
   Card: ({ children, className }: any) => <div className={className}>{children}</div>
 }))
 jest.mock('../../components/ui/Button', () => ({
-  Button: (props: any) => <button {...props}>{props.children}</button>
+  Button: ({ isLoading, children, ...props }: any) => (
+    <button disabled={isLoading} {...props}>
+      {isLoading ? "Loading..." : children}
+    </button>
+  )
 }))
 
 describe('ContactPage Integration', () => {
+  beforeEach(() => {
+    jest.useFakeTimers()
+  })
+
+  afterEach(() => {
+    jest.useRealTimers()
+  })
+
   it('validates empty form inputs', async () => {
     render(<ContactPage />)
 
@@ -37,7 +49,7 @@ describe('ContactPage Integration', () => {
   })
 
   it('validates invalid email format', async () => {
-    const user = userEvent.setup()
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
     render(<ContactPage />)
 
     await user.type(screen.getByLabelText(/nama lengkap/i), 'Test User')
@@ -51,7 +63,7 @@ describe('ContactPage Integration', () => {
   })
 
   it('submits form successfully with valid data', async () => {
-    const user = userEvent.setup()
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
     render(<ContactPage />)
 
     await user.type(screen.getByLabelText(/nama lengkap/i), 'Test User')
@@ -60,6 +72,10 @@ describe('ContactPage Integration', () => {
 
     const submitBtn = screen.getByRole('button', { name: /kirim pesan/i })
     await user.click(submitBtn)
+
+    act(() => {
+      jest.advanceTimersByTime(2000)
+    })
 
     expect(screen.getByText(/pesan terkirim/i)).toBeInTheDocument()
   })

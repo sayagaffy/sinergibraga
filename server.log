@@ -1,8 +1,14 @@
 
-> sinergibraga@0.1.0 start
-> next start
+> sinergibraga@0.1.0 dev
+> next dev
 
    ▲ Next.js 14.1.0
    - Local:        http://localhost:3000
+   - Environments: .env
 
- ✓ Ready in 448ms
+ ✓ Ready in 2.9s
+ ○ Compiling /contact ...
+ ✓ Compiled /contact in 7.3s (1262 modules)
+
+ ⚠ metadata.metadataBase is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ✓ Compiled in 895ms (625 modules)
