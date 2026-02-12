@@ -86,6 +86,7 @@ export function Hero() {
                                 src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop"
                                 alt="Modern Architecture and Nature"
                                 fill
+                                sizes="(max-width: 1023px) 1px, 50vw"
                                 className="object-cover"
                                 priority
                             />
