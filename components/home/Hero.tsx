@@ -55,7 +55,6 @@ export function Hero() {
                             <div className="flex items-start gap-4 group">
                                 <div className="p-3 bg-blue-50/50 rounded-2xl text-sbm-blue group-hover:bg-blue-50 transition-colors">
                                     <ShieldCheck className="w-6 h-6" />
-                                    id="trust-icon-1"
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-slate-900 text-lg">Terakreditasi</h4>
@@ -86,6 +85,10 @@ export function Hero() {
                                 src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop"
                                 alt="Modern Architecture and Nature"
                                 fill
+                                // Optimization: Force browser to download smallest variant (1px) on mobile
+                                // where this component is hidden (hidden lg:block).
+                                // On desktop (lg+), it takes up 50% of the viewport width.
+                                sizes="(max-width: 1023px) 1px, 50vw"
                                 className="object-cover"
                                 priority
                             />
