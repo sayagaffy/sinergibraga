@@ -3,15 +3,17 @@
 import * as React from "react"
 import { motion, HTMLMotionProps } from "framer-motion"
 import { cn } from "@/lib/utils"
+import { Loader2 } from "lucide-react"
 
 interface ButtonProps extends HTMLMotionProps<"button"> {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost'
   size?: 'sm' | 'md' | 'lg'
   children?: React.ReactNode
+  isLoading?: boolean
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = 'primary', size = 'md', children, ...props }, ref) => {
+  ({ className, variant = 'primary', size = 'md', children, isLoading, disabled, ...props }, ref) => {
 
     const variants = {
       primary: "bg-sbm-blue text-white hover:bg-sbm-blue/90 shadow-lg shadow-sbm-blue/20",
@@ -34,17 +36,23 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       className
     )
 
+    const isInteractive = !isLoading && !disabled;
+
     return (
       <motion.button
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
+        whileHover={isInteractive ? { scale: 1.02 } : undefined}
+        whileTap={isInteractive ? { scale: 0.98 } : undefined}
         ref={ref}
         className={classes}
+        disabled={disabled || isLoading}
         {...props}
       >
+        {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
         {children}
         {/* Futuristic glare effect */}
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500 transform -skew-x-12 translate-x-[-100%] hover:translate-x-[100%]" />
+        {isInteractive && (
+          <div className="absolute inset-0 -z-10 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500 transform -skew-x-12 translate-x-[-100%] hover:translate-x-[100%]" />
+        )}
       </motion.button>
     )
   }
