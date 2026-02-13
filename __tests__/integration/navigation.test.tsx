@@ -21,7 +21,7 @@ jest.mock('lucide-react', () => ({
 }))
 
 // Mock Components
-jest.mock('../../components/home/HeroSection', () => ({ HeroSection: () => <div>HeroSection</div> }))
+jest.mock('../../components/home/Hero', () => ({ Hero: () => <div>HeroSection</div> }))
 jest.mock('../../components/home/TrustBar', () => ({ TrustBar: () => <div>TrustBar</div> }))
 jest.mock('../../components/home/ServiceCard', () => ({ ServiceCard: ({ title, href }: any) => <a href={href}>{title}</a> }))
 // We don't need to mock GeoFactSheet explicitly if dynamic is mocked, but for safety:
