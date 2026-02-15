@@ -72,7 +72,7 @@ export function ExpertInsight({ expert }: ExpertInsightProps) {
           </div>
 
           <blockquote className="text-lg md:text-xl italic font-light leading-relaxed border-t md:border-t-0 md:border-l-4 border-sbm-blue pt-4 md:pt-0 md:pl-6 text-slate-600">
-            "{expert.expertQuote}"
+            &quot;{expert.expertQuote}&quot;
           </blockquote>
 
           {credentialList.length > 0 && (

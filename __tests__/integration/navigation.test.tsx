@@ -8,18 +8,6 @@ jest.mock('next/dynamic', () => () => {
   return DynamicComponent
 })
 
-// Mock icons
-jest.mock('lucide-react', () => ({
-  ArrowRight: () => <div data-testid="icon-arrow-right" />,
-  Car: () => <div data-testid="icon-car" />,
-  Droplets: () => <div data-testid="icon-droplets" />,
-  FileText: () => <div data-testid="icon-file-text" />,
-  Waves: () => <div data-testid="icon-waves" />,
-  Trophy: () => <div data-testid="icon-trophy" />,
-  Scale: () => <div data-testid="icon-scale" />,
-  Quote: () => <div data-testid="icon-quote" />
-}))
-
 // Mock Components
 jest.mock('../../components/home/HeroSection', () => ({ HeroSection: () => <div>HeroSection</div> }))
 jest.mock('../../components/home/TrustBar', () => ({ TrustBar: () => <div>TrustBar</div> }))
