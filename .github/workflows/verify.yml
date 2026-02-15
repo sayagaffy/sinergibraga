@@ -41,10 +41,10 @@ jobs:
       - name: Generate Prisma Client
         run: pnpm prisma generate
 
-      - name: Run Migrations
+      - name: Push Schema to Database
         env:
           DATABASE_URL: postgresql://jules_admin:password123@localhost:5432/sbm_db
-        run: pnpm prisma migrate deploy
+        run: pnpm prisma db push
 
       # Seeding might fail if the script is not set up correctly in package.json or requires env vars
       # but let's try to run it as defined in the original workflow, just using pnpm
