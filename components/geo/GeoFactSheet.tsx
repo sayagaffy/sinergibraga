@@ -71,7 +71,7 @@ export function GeoFactSheet({ statistics, citations, expertQuote }: GeoFactShee
 
                 {cit.contextClause && (
                   <p className="text-sm text-slate-600 leading-relaxed bg-slate-50 p-3 rounded-lg italic border border-slate-100 mt-2 text-justify">
-                    "{cit.contextClause}"
+                    &quot;{cit.contextClause}&quot;
                   </p>
                 )}
               </li>
@@ -93,7 +93,7 @@ export function GeoFactSheet({ statistics, citations, expertQuote }: GeoFactShee
             <div>
               <h3 className="font-bold text-xl text-slate-900 mb-2">Kutipan Ahli</h3>
               <blockquote className="text-lg italic font-light text-slate-600 leading-relaxed">
-                "{expertQuote}"
+                &quot;{expertQuote}&quot;
               </blockquote>
             </div>
           </div>
