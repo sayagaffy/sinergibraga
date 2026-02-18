@@ -39,7 +39,7 @@ jobs:
       - name: Run Migrations
         env:
           DATABASE_URL: postgresql://jules_admin:password123@localhost:5432/sbm_db
-        run: npx prisma migrate deploy
+        run: npx prisma db push
 
       - name: Seed Database
         env:
