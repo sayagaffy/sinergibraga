@@ -8,7 +8,7 @@ jest.mock('next/dynamic', () => () => {
   return DynamicComponent
 })
 
-// Mock icons
+// Mock icons - using simple divs to avoid complexity
 jest.mock('lucide-react', () => ({
   ArrowRight: () => <div data-testid="icon-arrow-right" />,
   Car: () => <div data-testid="icon-car" />,
@@ -17,14 +17,19 @@ jest.mock('lucide-react', () => ({
   Waves: () => <div data-testid="icon-waves" />,
   Trophy: () => <div data-testid="icon-trophy" />,
   Scale: () => <div data-testid="icon-scale" />,
-  Quote: () => <div data-testid="icon-quote" />
+  Quote: () => <div data-testid="icon-quote" />,
+  ShieldCheck: () => <div data-testid="icon-shield-check" />,
+  CheckCircle2: () => <div data-testid="icon-check-circle-2" />,
+  Leaf: () => <div data-testid="icon-leaf" />
 }))
 
-// Mock Components
-jest.mock('../../components/home/HeroSection', () => ({ HeroSection: () => <div>HeroSection</div> }))
+// Mock Components that might cause issues in integration tests
+// Note: We are NOT mocking Hero here because we want to test its content if possible,
+// OR if we mock it, we must ensure it doesn't break the page render.
+// The previous test file mocked `HeroSection` but `app/page.tsx` uses `Hero`.
+jest.mock('../../components/home/Hero', () => ({ Hero: () => <div data-testid="hero-section">Hero Content</div> }))
 jest.mock('../../components/home/TrustBar', () => ({ TrustBar: () => <div>TrustBar</div> }))
 jest.mock('../../components/home/ServiceCard', () => ({ ServiceCard: ({ title, href }: any) => <a href={href}>{title}</a> }))
-// We don't need to mock GeoFactSheet explicitly if dynamic is mocked, but for safety:
 jest.mock('../../components/geo/GeoFactSheet', () => ({ __esModule: true, default: () => <div>GeoFactSheet</div> }))
 jest.mock('../../components/ui/Button', () => ({ Button: ({ children }: any) => <button>{children}</button> }))
 
