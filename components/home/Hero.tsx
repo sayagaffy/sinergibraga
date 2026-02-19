@@ -55,7 +55,6 @@ export function Hero() {
                             <div className="flex items-start gap-4 group">
                                 <div className="p-3 bg-blue-50/50 rounded-2xl text-sbm-blue group-hover:bg-blue-50 transition-colors">
                                     <ShieldCheck className="w-6 h-6" />
-                                    id="trust-icon-1"
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-slate-900 text-lg">Terakreditasi</h4>
