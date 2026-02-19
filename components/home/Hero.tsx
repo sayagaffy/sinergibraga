@@ -55,7 +55,6 @@ export function Hero() {
                             <div className="flex items-start gap-4 group">
                                 <div className="p-3 bg-blue-50/50 rounded-2xl text-sbm-blue group-hover:bg-blue-50 transition-colors">
                                     <ShieldCheck className="w-6 h-6" />
-                                    id="trust-icon-1"
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-slate-900 text-lg">Terakreditasi</h4>
@@ -82,10 +81,15 @@ export function Hero() {
                         className="relative h-[500px] lg:h-[600px] w-full hidden lg:block"
                     >
                         <div className="absolute inset-0 bg-slate-200 rounded-2xl overflow-hidden shadow-2xl">
+                            {/*
+                                Optimization: Use sizes prop to fetch minimal image (1px) on mobile where it's hidden (lg:block).
+                                On desktop (>=1024px), it takes ~50vw.
+                            */}
                             <Image
                                 src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop"
                                 alt="Modern Architecture and Nature"
                                 fill
+                                sizes="(max-width: 1023px) 1px, 50vw"
                                 className="object-cover"
                                 priority
                             />

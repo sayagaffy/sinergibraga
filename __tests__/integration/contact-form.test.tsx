@@ -2,15 +2,6 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import ContactPage from '../../app/contact/page'
 
-// Mock icons to avoid render issues and focus on logic
-jest.mock('lucide-react', () => ({
-  MapPin: () => <div data-testid="icon-map-pin" />,
-  Phone: () => <div data-testid="icon-phone" />,
-  Mail: () => <div data-testid="icon-mail" />,
-  Clock: () => <div data-testid="icon-clock" />,
-  Instagram: () => <div data-testid="icon-instagram" />
-}))
-
 // Mock components
 jest.mock('../../components/ui/Section', () => ({
   Section: ({ children }: any) => <div>{children}</div>
