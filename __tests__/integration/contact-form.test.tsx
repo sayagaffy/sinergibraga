@@ -19,7 +19,11 @@ jest.mock('../../components/ui/Card', () => ({
   Card: ({ children, className }: any) => <div className={className}>{children}</div>
 }))
 jest.mock('../../components/ui/Button', () => ({
-  Button: (props: any) => <button {...props}>{props.children}</button>
+  Button: ({ isLoading, children, ...props }: any) => (
+    <button disabled={isLoading} {...props}>
+      {isLoading ? "Loading..." : children}
+    </button>
+  )
 }))
 
 describe('ContactPage Integration', () => {
@@ -61,6 +65,6 @@ describe('ContactPage Integration', () => {
     const submitBtn = screen.getByRole('button', { name: /kirim pesan/i })
     await user.click(submitBtn)
 
-    expect(screen.getByText(/pesan terkirim/i)).toBeInTheDocument()
+    expect(await screen.findByText(/pesan terkirim/i, {}, { timeout: 3000 })).toBeInTheDocument()
   })
 })
