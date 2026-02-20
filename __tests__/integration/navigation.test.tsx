@@ -17,7 +17,10 @@ jest.mock('lucide-react', () => ({
   Waves: () => <div data-testid="icon-waves" />,
   Trophy: () => <div data-testid="icon-trophy" />,
   Scale: () => <div data-testid="icon-scale" />,
-  Quote: () => <div data-testid="icon-quote" />
+  Quote: () => <div data-testid="icon-quote" />,
+  ShieldCheck: () => <div data-testid="icon-shield-check" />,
+  CheckCircle2: () => <div data-testid="icon-check-circle-2" />,
+  Leaf: () => <div data-testid="icon-leaf" />
 }))
 
 // Mock Components
