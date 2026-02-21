@@ -82,10 +82,12 @@ export function Hero() {
                         className="relative h-[500px] lg:h-[600px] w-full hidden lg:block"
                     >
                         <div className="absolute inset-0 bg-slate-200 rounded-2xl overflow-hidden shadow-2xl">
+                            {/* Optimization: Use 1px size for hidden mobile view to save bandwidth */}
                             <Image
                                 src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop"
                                 alt="Modern Architecture and Nature"
                                 fill
+                                sizes="(max-width: 1023px) 1px, 50vw"
                                 className="object-cover"
                                 priority
                             />
