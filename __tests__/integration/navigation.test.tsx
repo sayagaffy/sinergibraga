@@ -9,15 +9,12 @@ jest.mock('next/dynamic', () => () => {
 })
 
 // Mock icons
-jest.mock('lucide-react', () => ({
-  ArrowRight: () => <div data-testid="icon-arrow-right" />,
-  Car: () => <div data-testid="icon-car" />,
-  Droplets: () => <div data-testid="icon-droplets" />,
-  FileText: () => <div data-testid="icon-file-text" />,
-  Waves: () => <div data-testid="icon-waves" />,
-  Trophy: () => <div data-testid="icon-trophy" />,
-  Scale: () => <div data-testid="icon-scale" />,
-  Quote: () => <div data-testid="icon-quote" />
+jest.mock('lucide-react', () => new Proxy({}, {
+  get: (target, prop) => {
+    const Icon = (props: any) => <div data-testid={`icon-${String(prop).toLowerCase()}`} {...props} />
+    Icon.displayName = String(prop)
+    return Icon
+  }
 }))
 
 // Mock Components
