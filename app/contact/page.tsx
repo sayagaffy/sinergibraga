@@ -10,6 +10,7 @@ export default function ContactPage() {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' })
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -39,11 +40,16 @@ export default function ContactPage() {
       return
     }
 
+    setIsSubmitting(true)
+
     // Simulate submission
-    console.log("Submitting form:", formData)
-    setIsSubmitted(true)
-    setErrors({})
-    setFormData({ name: '', email: '', phone: '', message: '' })
+    setTimeout(() => {
+      console.log("Submitting form:", formData)
+      setIsSubmitted(true)
+      setIsSubmitting(false)
+      setErrors({})
+      setFormData({ name: '', email: '', phone: '', message: '' })
+    }, 1500)
   }
 
   return (
@@ -131,7 +137,7 @@ export default function ContactPage() {
                     {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
                   </div>
 
-                  <Button type="submit" className="w-full">Kirim Pesan</Button>
+                  <Button type="submit" className="w-full" isLoading={isSubmitting}>Kirim Pesan</Button>
                 </form>
               )}
             </Card>
