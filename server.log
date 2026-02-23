@@ -1,8 +1,26 @@
 
-> sinergibraga@0.1.0 start
-> next start
+> sinergibraga@0.1.0 dev
+> next dev
 
    ▲ Next.js 14.1.0
    - Local:        http://localhost:3000
+   - Environments: .env
 
- ✓ Ready in 448ms
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+ ✓ Ready in 2.5s
+ ○ Compiling /test-button ...
+ ✓ Compiled /test-button in 6.6s (1247 modules)
+
+ ⚠ metadata.metadataBase is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ✓ Compiled in 795ms (617 modules)
+ ✓ Compiled in 528ms (602 modules)
+[?25h
+npm notice
+npm notice New minor version of npm available! 11.7.0 -> 11.10.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.10.1
+npm notice To update run: npm install -g npm@11.10.1
+npm notice
