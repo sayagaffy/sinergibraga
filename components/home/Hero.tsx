@@ -55,7 +55,6 @@ export function Hero() {
                             <div className="flex items-start gap-4 group">
                                 <div className="p-3 bg-blue-50/50 rounded-2xl text-sbm-blue group-hover:bg-blue-50 transition-colors">
                                     <ShieldCheck className="w-6 h-6" />
-                                    id="trust-icon-1"
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-slate-900 text-lg">Terakreditasi</h4>
@@ -88,6 +87,8 @@ export function Hero() {
                                 fill
                                 className="object-cover"
                                 priority
+                                // Bolt: Optimize LCP by requesting 1px image on mobile where this component is hidden (hidden lg:block)
+                                sizes="(max-width: 1023px) 1px, 50vw"
                             />
 
                             {/* Floating Card */}
