@@ -8,24 +8,16 @@ jest.mock('next/dynamic', () => () => {
   return DynamicComponent
 })
 
-// Mock icons
-jest.mock('lucide-react', () => ({
-  ArrowRight: () => <div data-testid="icon-arrow-right" />,
-  Car: () => <div data-testid="icon-car" />,
-  Droplets: () => <div data-testid="icon-droplets" />,
-  FileText: () => <div data-testid="icon-file-text" />,
-  Waves: () => <div data-testid="icon-waves" />,
-  Trophy: () => <div data-testid="icon-trophy" />,
-  Scale: () => <div data-testid="icon-scale" />,
-  Quote: () => <div data-testid="icon-quote" />
-}))
-
 // Mock Components
+// We remove the explicit lucide-react mock because we have a global manual mock now that handles ALL icons.
+// jest.mock('lucide-react', ...)
+
 jest.mock('../../components/home/HeroSection', () => ({ HeroSection: () => <div>HeroSection</div> }))
 jest.mock('../../components/home/TrustBar', () => ({ TrustBar: () => <div>TrustBar</div> }))
 jest.mock('../../components/home/ServiceCard', () => ({ ServiceCard: ({ title, href }: any) => <a href={href}>{title}</a> }))
-// We don't need to mock GeoFactSheet explicitly if dynamic is mocked, but for safety:
 jest.mock('../../components/geo/GeoFactSheet', () => ({ __esModule: true, default: () => <div>GeoFactSheet</div> }))
+// Using the real Button component (which is mocked via framer-motion/lucide-react global mocks) or keep this simple mock?
+// The global mocks are robust now, so we could remove this mock too, but let's keep it simple for this integration test.
 jest.mock('../../components/ui/Button', () => ({ Button: ({ children }: any) => <button>{children}</button> }))
 
 describe('Navigation Flow', () => {
